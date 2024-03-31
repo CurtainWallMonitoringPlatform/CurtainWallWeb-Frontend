@@ -64,10 +64,10 @@ const groups = [{
   label: 'Code',
   commands: [{
     id: 'source',
-    label: 'View page source',
+    label: 'GitHub',
     icon: 'i-simple-icons-github',
     click: () => {
-      window.open(`https://github.com/nuxt-ui-pro/dashboard/blob/main/pages${route.path === '/' ? '/index' : route.path}.vue`, '_blank')
+      window.open(`https://github.com/CurtainWallMonitoringPlatform`, '_blank')
     }
   }]
 }]
