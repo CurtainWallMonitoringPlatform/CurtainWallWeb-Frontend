@@ -1,14 +1,40 @@
 <template>
     <div class="flex flex-col justify-center items-center overflow-scroll ">
+        <div>
+            请选择设备
+            <USelectMenu 
+            searchable
+            v-model="selectedDevice" 
+            :options="devices" 
+            option-attribute="label"
+            placeholder="select device">
+            <template #label>
+                <span :class="[selectedDevice.online ? 'bg-green-400' : 'bg-gray-200', 'inline-block h-2 w-2 flex-shrink-0 rounded-full']" aria-hidden="true" />
+                <span class="truncate">{{ selectedDevice.label }}</span>
+            </template>
+
+            <template #option="{ option: device }">
+                <span :class="[device.online ? 'bg-green-400' : 'bg-gray-200', 'inline-block h-2 w-2 flex-shrink-0 rounded-full']" aria-hidden="true" />
+                <span class="truncate">{{ device.label }}</span>
+            </template>
+            </USelectMenu>
+        </div>
+
         <div id="main" class="object-center"></div>
         <div id="main2" class="object-center"></div>
     </div>
-
 </template>
 
 <script setup lang="ts">
-    import { onMounted } from 'vue';
+    import { onMounted, ref, watch } from 'vue';
     import * as echarts from 'echarts';
+
+    const devices = ref();
+    const selectedDevice = ref({
+        label: '9A0D1958',
+        disabled: false,
+        online: true,
+    });
 
     let timeChart: any;
     let amplitudeChart: any;
@@ -225,55 +251,116 @@
 
     //WebSocket
     const websocketUrl = 'wss://digetech.cn:8771/websocket/user_58';
-    const socket = new WebSocket(websocketUrl);
+    let socket1 = new WebSocket(websocketUrl);
 
-    //socket连接成功
-    socket.onopen = () => {
-        console.log('WebSocket connection opened');
-        // WebSocket连接成功后发送请求1——获取设备实时状态
-        const request1 = {
-            code: 2,
-            data: [
-            'F001', '4787BE3A', '8850A7D7', '8361D7CD', '612B04ED', 'E884C99D',
-            'E43AC643', '29FA1867', '87C3D4E4', '9A0D1958', 'F853ED49', 'A77C5238'
-            ],
-            key: 'qiushangzhou852'
-        };
-        socket.send(JSON.stringify(request1));
-
-        const request2 = {
-            code: 1,
-            data: 'E43AC643',
-            channel: '0',
-            pam: 1,
-            key: 'qiushangzhou852'
-        };
-        socket.send(JSON.stringify(request2));
+    //socket请求参数1：获取设备实时状态
+    const request1 = {
+        code: 2,
+        data: [
+        '4787BE3A', '8850A7D7', '8361D7CD', '612B04ED', 'E884C99D',
+        'E43AC643', '29FA1867', '87C3D4E4', '9A0D1958', 'F853ED49', 'A77C5238'
+        ],
+        key: 'qiushangzhou852'
+    };
+    //socket请求参数2：获取设备详细数据
+    let request2 = {
+        code: 1,
+        data: selectedDevice.value.label,
+        channel: '0',
+        pam: 1,
+        key: 'qiushangzhou852'
     };
     
+    
+    //socket连接成功
+    socket1.onopen = () => {
+        console.log('WebSocket connection1 opened');
+        // WebSocket连接成功后发送请求1——获取设备实时状态
+        socket1.send(JSON.stringify(request1));
+        socket1.send(JSON.stringify(request2));
+    };
 
     //接收到socket消息
-    socket.onmessage = (event) => {
+    socket1.onmessage = (event) => {
         const message = JSON.parse(event.data);
         if(message.code = 20001){
-            console.log(message.data);
-            timeCurveData = message.data[0];
-            AmplitudeCurveData = message.data[1];
-            drawTimeChart(message.data[0]);
-            drawAmplitudeChart(message.data[1]);
+            if(message.message == '基础数据'){
+                console.log(message.data);
+                timeCurveData = message.data[0];
+                AmplitudeCurveData = message.data[1];
+                drawTimeChart(message.data[0]);
+                drawAmplitudeChart(message.data[1]);
+            }
+            else if(message.message == '设备状态'){
+                console.log(message.data);
+                devices.value = Object.entries(message.data).map(([key, value]) => ({
+                    label: key,
+                    disabled: value === 1 ? false : true,
+                    online: value === 1 ? true : false
+                }))
+            }
+
         }
     };
 
     //socket错误
-    socket.onerror = (error) => {
+    socket1.onerror = (error) => {
         console.error('WebSocket error:', error);
     };
 
-
     //socket关闭
-    socket.onclose = () => {
+    socket1.onclose = () => {
         console.log('WebSocket connection closed');
     };
+
+
+    watch(selectedDevice, (newValue) => {
+        request2.data = newValue.label;
+        socket1.close();
+        socket1 = new WebSocket(websocketUrl);
+        socket1.onopen = () => {
+            console.log('WebSocket connection1 reopened');
+            // WebSocket连接成功后发送请求1——获取设备实时状态
+            socket1.send(JSON.stringify(request1));
+            socket1.send(JSON.stringify(request2));
+        };
+
+        //接收到socket消息
+        socket1.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            if(message.code = 20001){
+                if(message.message == '基础数据'){
+                    console.log(message.data);
+                    timeCurveData = message.data[0];
+                    AmplitudeCurveData = message.data[1];
+                    drawTimeChart(message.data[0]);
+                    drawAmplitudeChart(message.data[1]);
+                }
+                else if(message.message == '设备状态'){
+                    console.log(message.data);
+                    devices.value = Object.entries(message.data).map(([key, value]) => ({
+                        label: key,
+                        disabled: value === 1 ? false : true,
+                        online: value === 1 ? true : false
+                    }))
+                }
+
+            }
+        };
+
+        //socket错误
+        socket1.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        //socket关闭
+        socket1.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+    });
+
+    
+
 
 
 
@@ -284,7 +371,7 @@
     #main,
     #main2{
         margin: 20px;
-        width: 70%;
+        width: 90%;
         height: 150vh;
         padding: 30px;
     }
