@@ -1,29 +1,46 @@
 <template>
-    <div class="flex flex-col justify-center items-center overflow-scroll ">
-        <div>
-            请选择设备
-            <USelectMenu 
-            searchable
-            v-model="selectedDevice" 
-            :options="devices" 
-            option-attribute="label"
-            placeholder="select device">
-            <template #label>
-                <span :class="[selectedDevice.online ? 'bg-green-400' : 'bg-gray-200', 'inline-block h-2 w-2 flex-shrink-0 rounded-full']" aria-hidden="true" />
-                <span class="truncate">{{ selectedDevice.label }}</span>
-            </template>
-
-            <template #option="{ option: device }">
-                <span :class="[device.online ? 'bg-green-400' : 'bg-gray-200', 'inline-block h-2 w-2 flex-shrink-0 rounded-full']" aria-hidden="true" />
-                <span class="truncate">{{ device.label }}</span>
-            </template>
-            </USelectMenu>
+    <div class="flex flex-col justify-center items-center overflow-scroll">
+      <div class="mt-10 flex justify-between flex justify-center items-center">
+        <div class="mr-4">
+          请选择设备:
         </div>
-
-        <div id="main" class="object-center"></div>
-        <div id="main2" class="object-center"></div>
+        <div class="w-48">
+          <USelectMenu
+            size="lg"
+            searchable
+            v-model="selectedDevice"
+            :options="devices"
+            option-attribute="label"
+            placeholder="select device"
+          >
+            <template #label>
+              <span
+                :class="[
+                  selectedDevice.online ? 'bg-green-400' : 'bg-gray-200',
+                  'inline-block h-2 w-2 flex-shrink-0 rounded-full'
+                ]"
+                aria-hidden="true"
+              />
+              <span class="truncate">{{ selectedDevice.label }}</span>
+            </template>
+  
+            <template #option="{ option: device }">
+              <span
+                :class="[
+                  device.online ? 'bg-green-400' : 'bg-gray-200',
+                  'inline-block h-2 w-2 flex-shrink-0 rounded-full'
+                ]"
+                aria-hidden="true"
+              />
+              <span class="truncate">{{ device.label }}</span>
+            </template>
+          </USelectMenu>
+        </div>
+      </div>
+      <div id="main" class="object-center"></div>
+      <div id="main2" class="object-center"></div>
     </div>
-</template>
+  </template>
 
 <script setup lang="ts">
     import { onMounted, ref, watch } from 'vue';
