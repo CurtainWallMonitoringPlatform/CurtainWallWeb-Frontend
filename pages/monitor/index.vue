@@ -37,8 +37,8 @@
           </USelectMenu>
         </div>
       </div>
-      <div id="main" class="object-center"></div>
-      <div id="main2" class="object-center"></div>
+        <div id="main"></div>
+        <div id="main2"></div>
     </div>
   </template>
 
@@ -67,34 +67,40 @@
         timeChart = echarts.init(document.getElementById('main'));
         amplitudeChart = echarts.init(document.getElementById('main2'));
     });
+
+    //随窗口响应式变化
+    window.addEventListener('resize', function() {
+        timeChart.resize();
+        amplitudeChart.resize();
+    });
     
 
-    // 辅助函数，用于将单个数字转换为两位数的字符串
-    const padZero = (num: number): string => {
-        return String(num).padStart(2, '0');
-    }
+    // // 辅助函数，用于将单个数字转换为两位数的字符串
+    // const padZero = (num: number): string => {
+    //     return String(num).padStart(2, '0');
+    // }
 
 
-    //计算时间戳list：间隔interval
-    const caculateTimeList = (start: number, interval: number): string[] => {
-        const time_list: string[] = [];
-        let i = 0;
-        for(;i < 1000; i++){
-            const date = new Date(start + i * interval);
-            const year = date.getUTCFullYear(); // 获取年份
-            const month = date.getUTCMonth() + 1; // 获取月份（注意月份从 0 开始，需要加 1）
-            const day = date.getUTCDate(); // 获取日期
-            const hour = date.getUTCHours() + 8; // 获取小时（加 8 是为了转换为北京时间）
-            const minute = date.getUTCMinutes(); // 获取分钟
-            const second = date.getUTCSeconds(); // 获取秒钟
+    // //计算时间戳list：间隔interval
+    // const caculateTimeList = (start: number, interval: number): string[] => {
+    //     const time_list: string[] = [];
+    //     let i = 0;
+    //     for(;i < 1000; i++){
+    //         const date = new Date(start + i * interval);
+    //         const year = date.getUTCFullYear(); // 获取年份
+    //         const month = date.getUTCMonth() + 1; // 获取月份（注意月份从 0 开始，需要加 1）
+    //         const day = date.getUTCDate(); // 获取日期
+    //         const hour = date.getUTCHours() + 8; // 获取小时（加 8 是为了转换为北京时间）
+    //         const minute = date.getUTCMinutes(); // 获取分钟
+    //         const second = date.getUTCSeconds(); // 获取秒钟
 
-            // const beijingTimeString = `${year}-${padZero(month)}-${padZero(day)} ${padZero(hour)}:${padZero(minute)}:${padZero(second)}`;
-            const beijingTimeString = `${padZero(hour)}:${padZero(minute)}:${padZero(second)}`;
-            time_list.push(beijingTimeString);
-        }
-        return time_list;
+    //         // const beijingTimeString = `${year}-${padZero(month)}-${padZero(day)} ${padZero(hour)}:${padZero(minute)}:${padZero(second)}`;
+    //         const beijingTimeString = `${padZero(hour)}:${padZero(minute)}:${padZero(second)}`;
+    //         time_list.push(beijingTimeString);
+    //     }
+    //     return time_list;
  
-    }
+    // }
 
 
     //绘制时程曲线
@@ -302,14 +308,14 @@
         const message = JSON.parse(event.data);
         if(message.code = 20001){
             if(message.message == '基础数据'){
-                console.log(message.data);
+                // console.log(message.data);
                 timeCurveData = message.data[0];
                 AmplitudeCurveData = message.data[1];
                 drawTimeChart(message.data[0]);
                 drawAmplitudeChart(message.data[1]);
             }
             else if(message.message == '设备状态'){
-                console.log(message.data);
+                // console.log(message.data);
                 devices.value = Object.entries(message.data).map(([key, value]) => ({
                     label: key,
                     disabled: value === 1 ? false : true,
@@ -347,14 +353,14 @@
             const message = JSON.parse(event.data);
             if(message.code = 20001){
                 if(message.message == '基础数据'){
-                    console.log(message.data);
+                    // console.log(message.data);
                     timeCurveData = message.data[0];
                     AmplitudeCurveData = message.data[1];
                     drawTimeChart(message.data[0]);
                     drawAmplitudeChart(message.data[1]);
                 }
                 else if(message.message == '设备状态'){
-                    console.log(message.data);
+                    // console.log(message.data);
                     devices.value = Object.entries(message.data).map(([key, value]) => ({
                         label: key,
                         disabled: value === 1 ? false : true,
@@ -388,8 +394,8 @@
     #main,
     #main2{
         margin: 20px;
-        width: 90%;
-        height: 150vh;
+        width: 100%;
+        height: 1000vh;
         padding: 30px;
     }
 </style>

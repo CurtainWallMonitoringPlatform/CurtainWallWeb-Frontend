@@ -11,11 +11,6 @@ const links = [[{
         icon: 'i-heroicons-arrow-trending-up',
         to: '/monitor/historical'
     },{
-        id: 'seismic',
-        label: '地震数据',
-        icon: 'i-heroicons-globe-europe-africa',
-        to: '/monitor/seismic'
-    },{
         id: 'abnormal',
         label: '异常数据',
         icon: 'i-heroicons-exclaimation-triangle',
