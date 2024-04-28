@@ -11,7 +11,7 @@ const ranges = [
   { label: '过去3个月', duration: { months: 3 } },
   { label: '去年', duration: { years: 1 } }
 ]
-const selected = ref({ start: sub(new Date(), { days: 14 }), end: new Date() })
+const selected = ref({ start: sub(new Date(), { days: 7 }), end: new Date() })
 
 function isRangeSelected (duration: Duration) {
   return isSameDay(selected.value.start, sub(new Date(), duration)) && isSameDay(selected.value.end, new Date())

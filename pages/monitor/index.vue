@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col justify-center items-center overflow-scroll">
-      <div class="mt-10 flex justify-between flex justify-center items-center">
+      <!-- <div class="mt-10 flex justify-between flex justify-center items-center">
         <div class="mr-4">
           请选择设备:
         </div>
@@ -38,11 +38,11 @@
         </div>
       </div>
         <div id="main"></div>
-        <div id="main2"></div>
+        <div id="main2"></div> -->
     </div>
   </template>
 
-<script setup lang="ts">
+<!-- <script setup lang="ts">
     import { onMounted, ref, watch } from 'vue';
     import * as echarts from 'echarts';
 
@@ -387,7 +387,7 @@
 
 
 
-</script>
+</script> -->
 
 <style scoped>
 

@@ -43,17 +43,32 @@
     const devices = ref([
         {
             deviceName: 'A楼01',
-            deviceId: '2FADSKFE',
+            deviceId: 'A77C5238',
             online: true,
         },
         {
             deviceName: 'A楼02',
-            deviceId: 'DFJEW234',
+            deviceId: 'F853ED49',
             online: true,
         },
         {
             deviceName: 'A楼03',
-            deviceId: 'DSFE313K',
+            deviceId: '9A0D1958',
+            online: true,
+        },
+        {
+            deviceName: 'A楼04',
+            deviceId: '87C3D4E4',
+            online: true,
+        },
+        {
+            deviceName: 'A楼05',
+            deviceId: '29FA1867',
+            online: true,
+        },
+        {
+            deviceName: 'A楼06',
+            deviceId: 'E43AC643',
             online: true,
         },
     ])
@@ -61,7 +76,7 @@
     //选中的设备
     const selectedDevice = ref({
         deviceName: 'A楼01',
-        deviceId: '2FADSKFE',
+        deviceId: 'A77C5238',
         online: true,
     });
 

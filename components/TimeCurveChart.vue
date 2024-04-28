@@ -36,6 +36,7 @@
     
     //绘制时程曲线
     const drawTimeChart = (chartData: any) =>{
+        console.log("draw",chartData);
         var option: EChartsOption;
 
         //计算x轴
@@ -46,9 +47,9 @@
         }
         
         const yData: YData = {
-            x: props.chartData.xData,
-            y: props.chartData.yData,
-            z: props.chartData.zData
+            x: chartData.xData,
+            y: chartData.yData,
+            z: chartData.zData
         };
 
         let series: any[] = [];
@@ -57,19 +58,19 @@
             // var line_label: any;
             // var label_position: any;
             // if(name == 'x'){
-            //     yline = props.chartData.rmsx;
-            //     line_label = `X均值：${props.chartData.rmsx}`;
+            //     yline = chartData.rmsx;
+            //     line_label = `X均值：${chartData.rmsx}`;
             //     label_position = 'insideStartTop';
             // }
             // else if(name == 'y'){
-            //     yline = props.chartData.rmsy;
-            //     line_label = `Y均值：${props.chartData.rmsy}`;
+            //     yline = chartData.rmsy;
+            //     line_label = `Y均值：${chartData.rmsy}`;
             //     label_position = 'insideMiddleTop';
 
             // }
             // else if(name == 'z'){
-            //     yline = props.chartData.rmsz;
-            //     line_label = `Z均值：${props.chartData.rmsz}`;
+            //     yline = chartData.rmsz;
+            //     line_label = `Z均值：${chartData.rmsz}`;
             //     label_position = 'insideEndTop';
 
             // }
@@ -100,7 +101,7 @@
         }
         option = {
             title: {
-                text: `时程曲线：设备${props.chartData.deviceInfo.deviceName}`,
+                text: `时程曲线：设备${chartData.deviceInfo.deviceName}`,
             },
             tooltip: {
                 trigger: 'axis'
@@ -136,6 +137,11 @@
 
         option && timeChart.setOption(option);
     }
+
+    watch(() => props.chartData, (newData) => {
+        console.log('chartData 发生变化:', newData);
+        drawTimeChart(newData);
+    });
 
 
 
