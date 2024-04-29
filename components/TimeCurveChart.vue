@@ -64,7 +64,7 @@
         }
         option = {
             title: {
-                text: `时程曲线：设备${chartData.deviceInfo.deviceName}`,
+                text: `时程曲线：${chartData.deviceInfo.deviceName}（设备${chartData.deviceInfo.deviceId}）`,
             },
             tooltip: {
                 trigger: 'axis'

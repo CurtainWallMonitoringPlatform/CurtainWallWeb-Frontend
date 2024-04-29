@@ -57,7 +57,7 @@
         option = {
             title: {
                 left: 'center',
-                text: `异常值数据：设备${chartData.deviceInfo.deviceName}`,
+                text: `${chartData.deviceInfo.deviceName}：设备${chartData.deviceInfo.deviceId}`,
             },
             tooltip: {
                 trigger: 'axis',
@@ -74,9 +74,6 @@
             toolbox: {
                 show: true, // 是否显示工具栏
                 feature:{
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
                     saveAsImage: {}  //保存图片
                 }
             },
@@ -106,6 +103,9 @@
                     type: 'scatter',
                     symbolSize: 8,
                     large: true,
+                    itemStyle: {
+                        color: 'rgb(255, 70, 131)'
+                    },
                     markLine: 
                     {
                         data: [
