@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import DeviceList from '~/components/DeviceList.vue';
+
 
 </script>
 
@@ -8,6 +10,7 @@
       <UDashboardNavbar title="设备中心">
       </UDashboardNavbar>
       
+      <DeviceList />
     </UDashboardPanel>
   </UDashboardPage>
 </template>
