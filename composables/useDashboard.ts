@@ -4,6 +4,7 @@ const _useDashboard = () => {
   const route = useRoute()
   const router = useRouter()
   const isHelpSlideoverOpen = ref(false)
+  const isDeviceSlideoverOpen = ref(false)
   const isNotificationsSlideoverOpen = ref(false)
 
   defineShortcuts({
@@ -17,11 +18,13 @@ const _useDashboard = () => {
 
   watch(() => route.fullPath, () => {
     isHelpSlideoverOpen.value = false
+    isDeviceSlideoverOpen.value = false
     isNotificationsSlideoverOpen.value = false
   })
 
   return {
     isHelpSlideoverOpen,
+    isDeviceSlideoverOpen,
     isNotificationsSlideoverOpen
   }
 }
