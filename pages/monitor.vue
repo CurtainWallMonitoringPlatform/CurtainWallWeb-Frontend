@@ -25,7 +25,7 @@ const links = [[{
           <UDashboardNavbar title="监测中心">
           </UDashboardNavbar>
 
-          <UDashboardToolbar class="py-0 px-1.5 overflow-x-auto">
+          <UDashboardToolbar class="overflow-x-auto">
               <UHorizontalNavigation :links="links" />
           </UDashboardToolbar>
 

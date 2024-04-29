@@ -17,6 +17,17 @@ const links = [{
   label: '监测中心',
   icon: 'i-heroicons-chart-bar-square',
   to: '/monitor',
+  children: [{
+    label: '实时监测',
+    to: '/monitor',
+    exact: true
+  }, {
+    label: '历史趋势',
+    to: '/monitor/historical'
+  },{
+    label: '异常数据',
+    to: '/monitor/abnormal'
+  }],
   tooltip: {
     text: '监测中心',
     shortcuts: ['G', 'M']

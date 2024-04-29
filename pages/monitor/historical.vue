@@ -7,8 +7,11 @@
       <DateRangePicker @selectRange="handleSelectRange"></DateRangePicker>
     </template>
   </UDashboardToolbar>
-
-  <TimeCurveChart :chartData="response"></TimeCurveChart>
+  
+  <TimeCurveChart :chartData="response" v-if="response != null"></TimeCurveChart>
+  <div class="flex items-center justify-center h-screen" v-if="response == null">
+    <USkeleton class="w-4/5 h-4/5" />
+  </div>
 
 </template>
 
@@ -18,7 +21,6 @@
     import { sub } from 'date-fns';
     import { GetHistoricalData } from '~/api/data';
 
-
     //请求参数
     const requestParams = ref({
         deviceId: 'A77C5238',
@@ -27,20 +29,11 @@
     });
 
     //响应参数
-    let response = ref({
-      deviceInfo:{
-        deviceId: 'DFEidfe',
-        deviceName: 'A楼01',
-      },
-      xData: [0.10055089, -0.019449234, 0.16055083, 0.29055095, 0.18055081, 0.040550947, -0.059449196, -0.059449196, 0.07055092, 0.010550737, -0.009449244],
-      yData: [-0.038269043, -0.17828369, -0.1482544, -0.10827637, -0.0982666, -0.038269043, -0.05822754, -0.21826172, -0.24822998, -0.0982666, -0.068237305],
-      zData: [-0.07610512, 0.08389664, 0.2138958, 0.04389572, -0.26610374, -0.26610374, -0.20610428, -0.08610344, 0.16389656, 0.30389595, 0.09389496, -0.07610512],
-      time: [1713542400000,1713542400001,1713542400002,1713542400003,1713542400004,1713542400005,1713542400006,1713542400007,1713542400008,1713542400009,1713542400010,1713542400011],
-    });
+    let response = ref(null);
 
     //获取历史数据
     const getHistoricalData = () =>{
-      console.log(requestParams.value)
+      response.value = null;
       GetHistoricalData(requestParams.value)
         .then(function(result: any){
           response.value = result.data;

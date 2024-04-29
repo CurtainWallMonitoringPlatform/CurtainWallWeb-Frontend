@@ -14,7 +14,7 @@ export function GetHistoricalData(data: any) {
         return response.data;
     }).catch(function (error) {  // catch 表示接收到错误响应后的操作
         console.log(error);
-    });
+    }).finally(function(){});
 };
 
 
@@ -29,8 +29,8 @@ export function GetAbnormalData(data: any) {
             endTime: data.endTime,
         }
     }).then(function (response) {
-        return response;
+        return response.data;
     }).catch(function (error) {  // catch 表示接收到错误响应后的操作
         console.log(error);
-    });
+    }).finally(function(){});
 };

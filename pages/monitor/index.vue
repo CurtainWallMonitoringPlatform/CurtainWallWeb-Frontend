@@ -1,12 +1,7 @@
 <template>
-    <div class="flex flex-col justify-center items-center overflow-scroll">
-      <div class="mt-10 flex justify-between flex justify-center items-center">
-        <div class="mr-4">
-          请选择设备:
-        </div>
-        <div class="w-48">
-          <USelectMenu
-            size="lg"
+    <UDashboardToolbar>
+        <template #left>
+            <USelectMenu
             searchable
             v-model="selectedDevice"
             :options="devices"
@@ -35,11 +30,13 @@
               <span class="truncate">{{ device.label }}</span>
             </template>
           </USelectMenu>
-        </div>
-      </div>
-        <div id="main"></div>
-        <div id="main2"></div>
-    </div>
+        </template>
+    </UDashboardToolbar>
+
+    <UDashboardCard class="overflow-y-auto">
+        <div id="main" style="height: 400px;" class="rounded-lg border border-gray-300"></div>
+        <div id="main2" style="height: 400px;" class="rounded-lg border border-gray-300"></div>
+    </UDashboardCard>
   </template>
 
 <script setup lang="ts">
@@ -73,35 +70,6 @@
         timeChart.resize();
         amplitudeChart.resize();
     });
-    
-
-    // // 辅助函数，用于将单个数字转换为两位数的字符串
-    // const padZero = (num: number): string => {
-    //     return String(num).padStart(2, '0');
-    // }
-
-
-    // //计算时间戳list：间隔interval
-    // const caculateTimeList = (start: number, interval: number): string[] => {
-    //     const time_list: string[] = [];
-    //     let i = 0;
-    //     for(;i < 1000; i++){
-    //         const date = new Date(start + i * interval);
-    //         const year = date.getUTCFullYear(); // 获取年份
-    //         const month = date.getUTCMonth() + 1; // 获取月份（注意月份从 0 开始，需要加 1）
-    //         const day = date.getUTCDate(); // 获取日期
-    //         const hour = date.getUTCHours() + 8; // 获取小时（加 8 是为了转换为北京时间）
-    //         const minute = date.getUTCMinutes(); // 获取分钟
-    //         const second = date.getUTCSeconds(); // 获取秒钟
-
-    //         // const beijingTimeString = `${year}-${padZero(month)}-${padZero(day)} ${padZero(hour)}:${padZero(minute)}:${padZero(second)}`;
-    //         const beijingTimeString = `${padZero(hour)}:${padZero(minute)}:${padZero(second)}`;
-    //         time_list.push(beijingTimeString);
-    //     }
-    //     return time_list;
- 
-    // }
-
 
     //绘制时程曲线
     const drawTimeChart = (chartData: any) =>{
@@ -382,11 +350,6 @@
         };
     });
 
-    
-
-
-
-
 </script>
 
 <style scoped>
@@ -394,8 +357,7 @@
     #main,
     #main2{
         margin: 20px;
-        width: 100%;
-        height: 1000vh;
+        width: 90%;
         padding: 30px;
     }
 </style>

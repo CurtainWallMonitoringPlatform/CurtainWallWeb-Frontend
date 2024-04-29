@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col justify-center items-center overflow-scroll">
-      <div id="main"></div>
+    <div class="flex flex-col justify-center items-center overflow-y-auto">
+      <div id="main" class="rounded-lg border border-gray-300"></div>
     </div>
 </template>
 
@@ -150,9 +150,9 @@
 
 <style scoped>
     #main{
-        margin: 20px;
+        margin: 30px;
         width: 90%;
-        height: 150vh;
+        height: 60vh;
         padding: 30px;
     }
 </style>
