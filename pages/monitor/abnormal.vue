@@ -2,7 +2,7 @@
   <UDashboardToolbar>
     <template #left>
       <!-- 设备选择 -->
-      <DeviceSelectMenu @selectDevice="handleSelectDevice"/>
+      <DeviceSelectMenu @selectDevice="handleSelectDevice" style="width: 150px"/>
       <!-- 方向选择 -->
       <USelectMenu v-model="direction" :options="directions" placeholder="选择方向" style="width: 100px"/>
       <!-- 时间选择 -->
@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
     import { sub } from 'date-fns';
-    import { GetAbnormalData } from '~/api/data';
+    import { GetAbnormalData } from '~/server/api/data';
 
     const directions = ['X', 'Y', 'Z']
     const direction = ref(directions[0])
@@ -91,4 +91,4 @@
       height: 150vh;
       padding: 30px;
   }
-</style>~/api/data
+</style>~/server/api/data

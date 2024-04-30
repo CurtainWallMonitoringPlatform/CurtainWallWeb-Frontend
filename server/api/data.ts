@@ -1,4 +1,4 @@
-import Request from "~/api/request"
+import Request from "~/server/request"
 
 //获取历史数据
 export function GetHistoricalData(data: any) {
