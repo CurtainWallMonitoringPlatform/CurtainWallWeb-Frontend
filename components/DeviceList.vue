@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import axios from 'axios';
 import { ref } from 'vue';
-import { GetDeviceInfo, GetDeviceList } from '~/server/api/device';
+// import { GetDeviceInfo } from '~/server/api/device';
 const { isDeviceSlideoverOpen } = useDashboard()
 
 interface Device {
     deviceName: string;
     deviceId: string;
-    offset: string;
-    lowerOuliter: string;
-    higherOutlier: string;
+    offset: number | string; // 这里我假设 offset 是一个数字，如果是字符串请保留您原来的类型
+    lowerOuliter: number | string; // 同上，根据实际情况修改类型
+    higherOutlier: number | string; // 同上
 }
 
 // 使用初始空数组并指定类型
@@ -24,8 +23,8 @@ let selectedDevice: Device = {
 
 const fetchDeviceList = async () => {
   try {
-    const devices = await GetDeviceList();
-    deviceList.value = devices;
+    const response = await useFetch('/api/device/all');
+    deviceList.value = response.data.value as unknown as Device[];
     console.log(deviceList.value);
   } catch (error) {
     console.error('Error getting device list:', error);
@@ -34,8 +33,9 @@ const fetchDeviceList = async () => {
 
 const fetchDeviceInfo = async (deviceId: string) => {
   try {
-    const deviceInfo = await GetDeviceInfo(deviceId);
-    selectedDevice = deviceInfo;
+    const { data: deviceInfo } = await useFetch(`/api/device/get/${deviceId}`)
+    // const deviceInfo = await GetDeviceInfo(deviceId);
+    selectedDevice = deviceInfo.value;
 
     console.log(selectedDevice);
     isDeviceSlideoverOpen.value = true;
@@ -58,13 +58,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="overflow-y-auto">
-    <div v-if="deviceList.length > 0" class="flex flex-col space-y-4 my-6 mx-20">
+  <div class="flex flex-col space-y-4 my-6 mx-20">
+    <div v-if="deviceList.length > 0" class="overflow-y-auto">
       <div v-for="device in deviceList" :key="device.deviceId">
         <UDashboardCard :title="device.deviceName" :description="`设备ID: ${device.deviceId}`"
-          icon="i-heroicons-circle-stack" :links="[{
+          icon="i-heroicons-circle-stack" 
+          :links="[{
             label: '查看详情',
-            color: 'gray',
+            color: 'sky',
             trailingIcon: 'i-heroicons-arrow-right-20-solid',
             click: () => openSlideover(device)
           }]">

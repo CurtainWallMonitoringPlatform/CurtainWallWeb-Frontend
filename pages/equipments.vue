@@ -1,7 +1,16 @@
 <script setup lang="ts">
-import DeviceList from '~/components/DeviceList.vue';
-
-
+const links = [[{
+  id: 'deviceList',
+  label: '设备列表',
+  icon: 'i-heroicons-queue-list',
+  to: '/equipments',
+  exact: true
+}, {
+  id: 'deviceAdd',
+  label: '新增设备',
+  icon: 'i-heroicons-plus-circle',
+  to: '/equipments/add'
+}]]
 </script>
 
 <template>
@@ -9,8 +18,12 @@ import DeviceList from '~/components/DeviceList.vue';
     <UDashboardPanel grow>
       <UDashboardNavbar title="设备中心">
       </UDashboardNavbar>
+
+      <UDashboardToolbar class="overflow-x-auto">
+        <UHorizontalNavigation :links="links" />
+      </UDashboardToolbar>
       
-      <DeviceList />
+      <NuxtPage />
     </UDashboardPanel>
   </UDashboardPage>
 </template>
