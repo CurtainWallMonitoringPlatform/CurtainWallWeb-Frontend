@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
 const modules = [
   {
     title: "玻璃幕墙分割",
@@ -52,7 +51,7 @@ const modules = [
   <UDashboardPage>
     <UDashboardPanel grow>
       <UDashboardNavbar title="首页"> </UDashboardNavbar>
-      <UPageGrid>
+      <UPageGrid class="custom-margin">
         <UPageCard
           v-for="(module, index) in modules"
           :key="index"
@@ -67,4 +66,10 @@ const modules = [
     </UDashboardPanel>
   </UDashboardPage>
 </template>
+
+<style scoped>
+.custom-margin {
+  margin: 20px;
+}
+</style>
 
