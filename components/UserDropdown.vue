@@ -2,7 +2,9 @@
 const { isHelpSlideoverOpen } = useDashboard()
 const { isDashboardSearchModalOpen } = useUIState()
 const { metaSymbol } = useShortcuts()
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const state = reactive({
   name: 'Curtain Wall Admin',
   email: 'admin@tongji.edu.cn',
@@ -35,10 +37,10 @@ const items = computed(() => [
     shortcuts: ['?'],
     click: () => isHelpSlideoverOpen.value = true
   }], [{
-    label: '文档',
+    label: '用户管理',
     icon: 'i-heroicons-book-open',
-    to: 'https://ui.nuxt.com/pro/getting-started',
-    target: '_blank'
+    to: '/userManage',
+    // target: '_blank'
   }, {
     label: 'GitHub',
     icon: 'i-simple-icons-github',
@@ -46,7 +48,11 @@ const items = computed(() => [
     target: '_blank'
   }], [{
     label: '退出登录',
-    icon: 'i-heroicons-arrow-left-on-rectangle'
+    icon: 'i-heroicons-arrow-left-on-rectangle',
+    click: () => {
+      localStorage.clear();
+      router.push('/login');
+    }
   }]
 ])
 </script>

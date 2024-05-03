@@ -1,15 +1,9 @@
 // 管理用户数据
-import { defineStore } from "pinia"
-import { ref } from "vue"
-// import store from '@/store/index.js'
-// import Request from "@/utils/Request.js";  // 在每个 api 文件里都要引入这两个文件
 import Request from "@/server/request.ts"; 
 import Message from "@/server/Message.js"  // 在每个 api 文件里都要引入这两个文件
 
-export const useUserStore = defineStore('user', () => {
-    const userInfo = ref({});
-
-    const login = async (email, password) => {
+const userService = {
+    async login(email, password) {
         try {
             const response = await Request.post('/account/login', { "username": email, "password": password });
             if (response.status === 200) {
@@ -25,9 +19,9 @@ export const useUserStore = defineStore('user', () => {
         } catch (error) {
             Message.error(error.message)
         }
-    };
+    },
 
-    const sendVerificationCode = async (email) => {
+    async sendVerificationCode (email) {
         try {
             const response = await Request.post('/api/account/sendCode', { "email": email });
             if (response.status === 200) {
@@ -41,9 +35,9 @@ export const useUserStore = defineStore('user', () => {
             Message.error(error.message);
             return false;
         }
-    };
+    },
 
-    const register = async (email, code, password) => {
+    async register (email, code, password) {
         try {
             const response = await Request.post('/api/account/validate', { "email": email, "code": code, "password": password });
             if (response.status === 200) {
@@ -57,9 +51,9 @@ export const useUserStore = defineStore('user', () => {
             Message.error(error.message);
             return false;
         }
-    };
+    },
 
-    const getCurrentInfo = async (user) => {
+    async getCurrentInfo (user) {
         try {
             const headers = { 'Authorization': `Token ${user}` };
             const response = await Request.get('/get-info', { headers });
@@ -74,22 +68,24 @@ export const useUserStore = defineStore('user', () => {
             Message.error(error.message);
             return response.data;
         }
-    };
+    },
+}
 
+export default userService;
     // 退出时清除用户信息
-    const clearUserInfo = () => {
-        userInfo.value = {};
-        store.dispatch('doLogout');
-    };
+//     const clearUserInfo = () => {
+//         userInfo.value = {};
+//         store.dispatch('doLogout');
+//     };
 
-    return {
-        userInfo,
-        sendVerificationCode,
-        login,
-        register,
-        clearUserInfo,
-        getCurrentInfo
-    };
-}, {
-    persist: true,
-});
+//     return {
+//         userInfo,
+//         sendVerificationCode,
+//         login,
+//         register,
+//         clearUserInfo,
+//         getCurrentInfo
+//     };
+// }, {
+//     persist: true,
+// });
