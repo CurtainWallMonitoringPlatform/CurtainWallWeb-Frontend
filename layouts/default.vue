@@ -4,6 +4,16 @@ const appConfig = useAppConfig()
 const { isHelpSlideoverOpen } = useDashboard()
 
 const links = [{
+  id: 'login',
+  label: '登陆',
+  icon: 'i-heroicons-home',
+  to: '/login',
+  
+  tooltip: {
+    text: '登陆',
+    // shortcuts: ['G', 'H']
+  }
+}, {
   id: 'home',
   label: '首页',
   icon: 'i-heroicons-home',
