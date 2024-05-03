@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref, watch }from 'vue'
+// import { ref, watch }from 'vue'
 import { GetResultByDate } from '@/api/segment/segmentation.js'
 
 const pickedDate = ref('')

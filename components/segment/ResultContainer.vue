@@ -7,14 +7,12 @@
           <div class="thumbnail-wrap">
             <img :src="data.thumbnail" alt="缩略图加载失败">
             <div class="label-wrap">
-              <UCheckbox v-for="(label, index) in data.labelList" :key="index" :label="label" border size="mini" checked="true"/>
-              <!-- </UCheckbox> -->
               <el-checkbox-group v-if="isGlass" v-model="selectedLabels" class="label-group">
-              <el-checkbox v-for="(label, index) in data.labelList" :key="index" :label="label" border size="mini" checked="true">
-                {{ label }}
-              </el-checkbox>
-            </el-checkbox-group>
-          </div>
+                <el-checkbox v-for="(label, index) in data.labelList" :key="index" :label="label" border size="mini" checked="true">
+                  {{ label }}
+                </el-checkbox>
+              </el-checkbox-group>
+            </div>
           </div>
         <!-- </el-row> -->
         <!-- <el-row :span="24" class="result-gallery-col" style="" v-loading="isload"> -->
@@ -38,7 +36,7 @@
   <script setup>
   import { ref, defineProps, computed, onMounted, watch } from 'vue';
   import { ElCheckbox, ElRow, ElCard, ElCheckboxGroup } from 'element-plus';
-import { UCheckbox } from '#build/components';
+import { is } from 'date-fns/locale';
 
   const isload = ref(false);
   
@@ -70,8 +68,8 @@ import { UCheckbox } from '#build/components';
     const maxSpan = Math.floor(screenWidth / cardWidth);
     return Math.max(minSpan, Math.min(maxSpan, maxSpan));
   };
-  
-  const filteredImages = ref(props.data.pictures.filter(imageInfo => selectedLabels.value.includes(imageInfo.label)));
+
+  const filteredImages = ref([]);
 
   watch([() => selectedLabels.value, () => props.data.pictures], () => {
     filteredImages.value = props.data.pictures.filter(imageInfo => selectedLabels.value.includes(imageInfo.label));

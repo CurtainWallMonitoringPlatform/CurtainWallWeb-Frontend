@@ -1,6 +1,7 @@
 <!-- 多张图片上传逻辑 -->
 <!-- 具体需要调用的api在方法uploadPicture里使用 -->
 <template>
+  <div>
     <!-- 图片选择框 -->
     <el-row class="upload-container" >
       <el-upload 
@@ -37,6 +38,7 @@
         <el-button type="primary" @click="uploadPicture" class="btn">开始操作</el-button>
         <el-button type="info" @click="onCancel" class="btn">取消选择</el-button>
     </el-row>
+  </div>
 </template>
   
 <script setup>
@@ -55,7 +57,7 @@ const fileList = reactive([]) //选择的图片列表
 
 const isSelectedShow = ref(true) //是否显示上传的图片列表
 
-//el-upload类，根据fileList的大小选择是否显示上传框
+// el-upload类，根据fileList的大小选择是否显示上传框
 const uploadClass = computed(()=>{
   return fileList.length >=1 ? 'hideUpload':'showUpload';
 })

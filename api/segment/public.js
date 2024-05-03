@@ -1,6 +1,5 @@
 import Request from "@/utils/Request.js";  // 在每个 api 文件里都要引入这两个文件
 import Message from "@/utils/Message.js"  // 在每个 api 文件里都要引入这两个文件
-import router from "@/router/index.js"
 import store from "@/store/index.js"
 
 // 图像上传内部接口

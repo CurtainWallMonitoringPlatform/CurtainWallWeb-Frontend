@@ -149,7 +149,7 @@ const colors = computed(() => defaultColors.value.map(color => ({ ...color, acti
     <!-- ~/components/HelpSlideover.vue -->
     <HelpSlideover />
     <!-- ~/components/NotificationsSlideover.vue -->
-    <NotificationsSlideover />
+    <!-- <NotificationsSlideover /> -->
 
     <ClientOnly>
       <LazyUDashboardSearch :groups="groups" />
