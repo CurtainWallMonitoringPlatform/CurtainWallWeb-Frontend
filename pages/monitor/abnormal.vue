@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
     import { sub } from 'date-fns';
-    import { GetAbnormalData } from '~/server/api/data';
+    import { GetAbnormalData } from '~/api/data';
 
     const directions = ['X', 'Y', 'Z']
     const direction = ref(directions[0])
@@ -91,4 +91,4 @@
       height: 150vh;
       padding: 30px;
   }
-</style>~/server/api/data
+</style>~/api/data

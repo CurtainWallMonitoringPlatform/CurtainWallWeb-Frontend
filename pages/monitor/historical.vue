@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
     import { sub } from 'date-fns';
-    import { GetHistoricalData } from '~/server/api/data';
+    import { GetHistoricalData } from '~/api/data';
 
     //请求参数
     const requestParams = ref({
@@ -94,4 +94,4 @@
       height: 150vh;
       padding: 30px;
   }
-</style>~/server/api/data
+</style>~/api/data

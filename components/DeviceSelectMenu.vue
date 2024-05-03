@@ -33,7 +33,7 @@
   
 <script setup lang="ts">
     import { onMounted, defineEmits } from 'vue'
-    import { GetDeviceList } from '~/server/api/device';
+    import { GetDeviceList } from '~/api/data';
 
     const emit = defineEmits(['selectDevice']);
 
@@ -50,13 +50,13 @@
 
     onMounted(async ()=>{
         //后端调用获取devices
-        try {
-            const devices = await GetDeviceList();
-            deviceList.value = devices;
-            console.log(deviceList.value);
-        } catch (error) {
-            console.error('Error getting device list:', error);
-        }
+        GetDeviceList()
+            .then(function(res){
+                deviceList.value = res.data.devices;
+            })
+            .catch(function(err){
+                console.log(err);
+            })
     })
   
 

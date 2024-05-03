@@ -1,4 +1,4 @@
-import Request from "~/server/request"
+import Request from "~/api/request"
 
 //获取历史数据
 export function GetHistoricalData(data: any) {
@@ -29,6 +29,18 @@ export function GetAbnormalData(data: any) {
             endTime: data.endTime,
         }
     }).then(function (response) {
+        return response.data;
+    }).catch(function (error) {  // catch 表示接收到错误响应后的操作
+        console.log(error);
+    }).finally(function(){});
+};
+
+export function GetDeviceList() {
+    return Request({  // 发送请求
+        method: 'GET',
+        url: '/api/device/all',
+    }).then(function (response) {
+        console.log(response)
         return response.data;
     }).catch(function (error) {  // catch 表示接收到错误响应后的操作
         console.log(error);
