@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: 'auth'
+});
 const modules = [
   {
     title: "玻璃幕墙分割",

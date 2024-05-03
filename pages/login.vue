@@ -16,8 +16,8 @@
               ref="inputPassword" />
           </el-form-item>
 
-          <el-form-item>
-            <el-button @click="login">登录</el-button>
+          <el-form-item @click="login">
+            <el-button>登录</el-button>
           </el-form-item>
 
           <el-form-item style="position:absolute;top:80%">
@@ -71,10 +71,10 @@
 </template>
 
 <script setup>
-import { useUserStore } from '@/server/api/user';
+import userService from '@/server/api/user.js';
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router';
 // import store from '@/store/index.js'
-// import router from "@/router/index.js"
 
 // const GoToLayout = () => {
 //   router.push({
@@ -85,8 +85,9 @@ import { onMounted, ref } from 'vue'
 //   })
 // }
 
+const router = useRouter();
 const showLoginForm = ref(true);
-const userStore = useUserStore();
+const userStore = userService;
 const inputEmail = ref(null);
 const inputPassword = ref(null);
 
@@ -105,16 +106,19 @@ const focusNextInput = () => {
   inputPassword.value.focus();
 }
 
+//todo: 暂时不发请求，需要统一api，先直接写死
 const login = async () => {
-  const loginSuccess = await userStore.login(loginForm.value.email, loginForm.value.password);
+  console.log("click login");
+  // const loginSuccess = await userStore.login(loginForm.value.email, loginForm.value.password);
+  const loginSuccess = true;
   if (loginSuccess) {
     // const user = JSON.parse(localStorage.getItem('user')).userInfo.token;
     // const result = await userStore.getCurrentInfo(user);
     // 触发 mutation 更新 store 中的数据
-    store.commit('SET_USERNAME', loginForm.value.email);
-    store.commit('SET_EMAIL', loginForm.value.email);
-
-    // router.push({ name: 'layout', params: { choice: 'dashboard' } });
+    // store.commit('SET_USERNAME', loginForm.value.email);
+    // store.commit('SET_EMAIL', loginForm.value.email);
+    localStorage.setItem('authToken', "1111");
+    router.push({ path: '/' });
   } else {
     console.error(error.message);
   }
@@ -176,9 +180,8 @@ const toggleForm = () => {
 };
 
 onMounted(() => {
-  userStore.clearUserInfo()
+  // userStore.clearUserInfo()
 });
-
 
 </script>
 

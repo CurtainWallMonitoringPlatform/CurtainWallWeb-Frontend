@@ -13,5 +13,14 @@ export default defineNuxtConfig({
     icons: ['heroicons', 'simple-icons'],
     safelistColors: ['primary', 'red', 'orange', 'green']
   },
-  devtools: { enabled: true }
+  devtools: { enabled: true },
+  ssr: false,// 不开启服务端渲染
+  nitro: {
+    devProxy: {
+      '/account/login': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+    },
+  },
 })
