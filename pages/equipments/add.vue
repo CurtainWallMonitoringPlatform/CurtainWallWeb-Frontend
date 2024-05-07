@@ -105,14 +105,14 @@ async function onSubmit (event: FormSubmitEvent<any>) {
         </UFormGroup>
 
         <UFormGroup
-          name="higherOutlier"
+          name="higherOuliter"
           label="设备阈值上限"
           description="简介"
           required
           class="grid grid-cols-2 gap-2"
           :ui="{ container: '' }"
         >
-          <UInput v-model="deviceInfo.higherOuliter" type="higherOutlier" autocomplete="off" icon="i-heroicons-arrow-up" size="md">
+          <UInput v-model="deviceInfo.higherOuliter" type="higherOuliter" autocomplete="off" icon="i-heroicons-arrow-up" size="md">
           </UInput>
         </UFormGroup>
       </UDashboardSection>

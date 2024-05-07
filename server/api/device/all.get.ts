@@ -5,10 +5,10 @@ const BASE_URL = 'http://47.120.50.113:8090/api/device';
 
 interface Device {
     deviceName: string;
-    deviceId: string;
-    offset: string;
     lowerOuliter: string;
-    higherOutlier: string;
+    higherOuliter: string;
+    offset: string;
+    deviceId: string;
 }
 
 // 假设的设备列表响应类型
