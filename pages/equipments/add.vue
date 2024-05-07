@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
+import { sub } from 'date-fns';
+import { de } from 'date-fns/locale';
 
 const deviceInfo = reactive({
-  deviceId: '',
   deviceName: '',
-  offset: '',
   lowerOuliter: '',
-  higherOutlier: '',
+  higherOuliter: '',
+  offset: '',
+  deviceId: '',
 })
 
 const toast = useToast()
@@ -17,15 +19,35 @@ function validate (deviceInfo: any): FormError[] {
   if (!deviceInfo.deviceName) errors.push({ path: 'deviceName', message: '请输入设备名称！' })
   if (!deviceInfo.offset) errors.push({ path: 'offset', message: '请输入设备偏移量! ' })
   if (!deviceInfo.lowerOuliter) errors.push({ path: 'lowerOuliter', message: '请输入设备阈值下限！' })
-  if (!deviceInfo.higherOutlier) errors.push({ path: 'higherOutlier', message: '请输入设备阈值上限！' })
+  if (!deviceInfo.higherOuliter) errors.push({ path: 'higherOuliter', message: '请输入设备阈值上限！' })
   return errors
 }
 
+// const addDeviceInfo = async (deviceInfo: any) => {
+//   try {
+//     const response:any = await useFetch('/api/device/addDevice', {
+//       method: 'POST',
+//       body: deviceInfo,
+//     })
+//   } catch (error) {
+//     console.error('Error adding device info:', error)
+//   }
+// }
+
 async function onSubmit (event: FormSubmitEvent<any>) {
   // Do something with data
+  // addDeviceInfo(event.data)
+  $fetch('/api/device/addDevice', { method: 'post', body: deviceInfo })
   console.log(event.data)
-
   toast.add({ title: 'Device Added', icon: 'i-heroicons-check-circle' })
+  // Clear form
+  Object.assign(deviceInfo, {
+    deviceName: '',
+    lowerOuliter: '',
+    higherOuliter: '',
+    offset: '',
+    deviceId: '',
+  })
 }
 </script>
 
@@ -90,7 +112,7 @@ async function onSubmit (event: FormSubmitEvent<any>) {
           class="grid grid-cols-2 gap-2"
           :ui="{ container: '' }"
         >
-          <UInput v-model="deviceInfo.higherOutlier" type="higherOutlier" autocomplete="off" icon="i-heroicons-arrow-up" size="md">
+          <UInput v-model="deviceInfo.higherOuliter" type="higherOutlier" autocomplete="off" icon="i-heroicons-arrow-up" size="md">
           </UInput>
         </UFormGroup>
       </UDashboardSection>

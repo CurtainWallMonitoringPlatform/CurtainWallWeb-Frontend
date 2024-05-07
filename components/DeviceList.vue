@@ -13,13 +13,13 @@ interface Device {
 
 // 使用初始空数组并指定类型
 let deviceList = ref<Device[]>([]);
-let selectedDevice: Device = {
+let selectedDevice: Device = ({
   deviceName: '',
   deviceId: '',
   offset: '',
   lowerOuliter: '',
   higherOutlier: ''
-};
+});
 
 const fetchDeviceList = async () => {
   try {
@@ -58,9 +58,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col space-y-4 my-6 mx-20">
-    <div v-if="deviceList.length > 0" class="overflow-y-auto">
-      <div v-for="device in deviceList" :key="device.deviceId">
+  <div class="overflow-y-auto">
+    <div v-if="deviceList.length > 0" class="flex flex-col space-y-4 my-6 mx-20">
+      <div v-for="device in deviceList" :key="device.deviceId" class="m-4">
         <UDashboardCard :title="device.deviceName" :description="`设备ID: ${device.deviceId}`"
           icon="i-heroicons-circle-stack" 
           :links="[{
@@ -87,6 +87,16 @@ onMounted(() => {
         <p>设备阈值上限：{{ selectedDevice.higherOutlier }}</p>
         <p>设备阈值下限：{{ selectedDevice.lowerOuliter }}</p>
       </template>
+      <UButton
+        class="my-4"
+        icon="i-heroicons-pencil-square"
+        size="sm"
+        color="sky"
+        variant="solid"
+        label="修改信息"
+        :trailing="false"
+
+      />
     </UDashboardSlideover>
   </div>
 </template>
