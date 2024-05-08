@@ -65,7 +65,7 @@ const deleteDevice = async (deviceId: string) => {
 
 const editDeviceInfo = async (deviceInfo: Device) => {
   try {
-    await useFetch(`/api/device/update/${deviceInfo.deviceId}`, {
+    await useFetch(`/api/device/modify/${deviceInfo.deviceId}`, {
       method: 'PUT',
       body: deviceInfo,
     });
@@ -90,7 +90,7 @@ function validate(deviceInfo: any): FormError[] {
 // 使用新的 API 函数
 const openSlideover = (device: Device) => {
   selectedDevice.deviceId = device.deviceId;
-  fetchDeviceInfo(device.deviceId); // 调用 fetchDeviceInfo 替代原来的 getDeviceInfo
+  fetchDeviceInfo(device.deviceId);
 };
 
 // 在组件挂载时获取设备列表
@@ -128,7 +128,7 @@ onMounted(() => {
           <UFormGroup name="deviceId" label="设备ID" required class="grid grid-cols-2 gap-2 my-2"
             :ui="{ container: '' }">
             <UInput v-model="selectedDevice.deviceId" type="deviceId" autocomplete="off"
-              icon="i-heroicons-identification" size="md" />
+              icon="i-heroicons-identification" size="md" readonly/>
           </UFormGroup>
 
           <UFormGroup name="deviceName" label="设备名称" required class="grid grid-cols-2 gap-2 my-2"
@@ -166,6 +166,7 @@ onMounted(() => {
             label="保存修改"
             :trailing="false" 
             type="submit"
+            @click="() => editDeviceInfo(selectedDevice)"
           />
 
           <UButton
