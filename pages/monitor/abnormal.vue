@@ -19,31 +19,56 @@
 
 <script setup lang="ts">
     import { sub } from 'date-fns';
-    import { GetAbnormalData } from '~/api/data';
+    // import { GetAbnormalData } from '~/api/data';
+
+    interface RequestParam {
+      deviceId: string;
+      startTime: string | number;
+      endTime: string | number;
+    }
 
     //请求参数
-    const requestParams = ref({
+    // const requestParams = ref({
+    //     deviceId: 'A77C5238',
+    //     startTime: 0,
+    //     endTime: 0
+    // });
+
+    let requestParams: RequestParam = ({
         deviceId: 'A77C5238',
-        startTime: 0,
-        endTime: 0
+        startTime: '',
+        endTime: ''
     });
 
     //响应参数
-    let response = ref(null);
+    let response = ref();
 
     //获取历史数据
-    const getAbnormalData = () =>{
-      response.value = null;
-      GetAbnormalData(requestParams.value)
-        .then(function(result: any){
-          response.value = result.data;
-          console.log(response.value)
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-    }
+    // const getAbnormalData = () =>{
+    //   response.value = null;
+    //   GetAbnormalData(requestParams.value)
+    //     .then(function(result: any){
+    //       response.value = result.data;
+    //       console.log(response.value)
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     })
+    // }
 
+    //
+    const getAbnormalData = async (requestParams : RequestParam ) => {
+      try {
+        response.value = await useFetch(`/api/monitor/hitorical-data/`, {
+          method: 'GET',
+          query: requestParams,
+        });
+        console.log('aaaaaaaaaaaaaaaaaaaa',response.value)
+
+      } catch (error) {
+        console.error('Error updating device info:', error);
+      }
+    };
 
     
     onMounted(()=>{
@@ -57,30 +82,31 @@
       initialTime.value.start.setHours(0, 0, 0, 0);
       initialTime.value.end.setHours(0, 0, 0, 0);
       // 获取时间戳
-      requestParams.value.startTime = initialTime.value.start.getTime();
-      requestParams.value.endTime = initialTime.value.end.getTime();
-      getAbnormalData();
-
+      requestParams.startTime = initialTime.value.start.getTime();
+      requestParams.endTime = initialTime.value.end.getTime();
       //调用默认设备和当前日期：发送后端请求
+      getAbnormalData(requestParams);
 
     })
 
     //选择时间范围
     const handleSelectRange = (val: any) => {
-        requestParams.value.startTime = val.start_time;
-        requestParams.value.endTime = val.end_time;
-        console.log(requestParams.value.startTime);
-        console.log(requestParams.value.endTime);
-        // todo：调用后端请求接口
-        getAbnormalData();
+        requestParams.startTime = val.start_time;
+        requestParams.endTime = val.end_time;
+        console.log(requestParams.startTime);
+        console.log(requestParams.endTime);
+        //调用后端请求接口
+        getAbnormalData(requestParams);
+
     }
 
     //选择设备
     const handleSelectDevice = (val: any) => {
-      requestParams.value.deviceId = val.deviceId;
-      console.log(requestParams.value.deviceId);
-      //todo: 调用后端请求接口
-      getAbnormalData();
+      requestParams.deviceId = val.deviceId;
+      console.log(requestParams.deviceId);
+      //调用后端请求接口
+      getAbnormalData(requestParams);
+
     }
 
 

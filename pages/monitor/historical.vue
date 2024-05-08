@@ -19,31 +19,33 @@
 
 <script setup lang="ts">
     import { sub } from 'date-fns';
-    import { GetHistoricalData } from '~/api/data';
 
-    //请求参数
-    const requestParams = ref({
+    interface RequestParam {
+      deviceId: string;
+      startTime: string | number;
+      endTime: string | number;
+    }
+
+    let requestParams: RequestParam = ({
         deviceId: 'A77C5238',
-        startTime: 0,
-        endTime: 0
+        startTime: '',
+        endTime: ''
     });
 
     //响应参数
-    let response = ref(null);
+    let response = ref();
 
-    //获取历史数据
-    const getHistoricalData = () =>{
-      response.value = null;
-      GetHistoricalData(requestParams.value)
-        .then(function(result: any){
-          response.value = result.data;
-          console.log(response.value)
-        })
-        .catch(function (error) {
-          console.log(error);
-        }
-    )}
-
+    const getHistoricalData = async (requestParams : RequestParam ) => {
+      try {
+        const result = await useFetch(`/api/monitor/historical-data/`, {
+          method: 'GET',
+          query: requestParams,
+        });
+        response.value = result.data.value.data;
+      } catch (error) {
+        console.error('Error get historical-data:', error);
+      }
+    };
 
     
     onMounted(()=>{
@@ -57,30 +59,30 @@
       initialTime.value.start.setHours(0, 0, 0, 0);
       initialTime.value.end.setHours(0, 0, 0, 0);
       // 获取时间戳
-      requestParams.value.startTime = initialTime.value.start.getTime();
-      requestParams.value.endTime = initialTime.value.end.getTime();
-      getHistoricalData();
-
+      requestParams.startTime = initialTime.value.start.getTime();
+      requestParams.endTime = initialTime.value.end.getTime();
       //调用默认设备和当前日期：发送后端请求
-
+      getHistoricalData(requestParams);
     })
 
     //选择时间范围
     const handleSelectRange = (val: any) => {
-        requestParams.value.startTime = val.start_time;
-        requestParams.value.endTime = val.end_time;
-        console.log(requestParams.value.startTime);
-        console.log(requestParams.value.endTime);
-        // todo：调用后端请求接口
-        getHistoricalData();
+        requestParams.startTime = val.start_time;
+        requestParams.endTime = val.end_time;
+        console.log(requestParams.startTime);
+        console.log(requestParams.endTime);
+        // 调用后端请求接口
+        getHistoricalData(requestParams);
+        
     }
 
     //选择设备
     const handleSelectDevice = (val: any) => {
-      requestParams.value.deviceId = val.deviceId;
-      console.log(requestParams.value.deviceId);
-      //todo: 调用后端请求接口
-      getHistoricalData();
+      requestParams.deviceId = val.deviceId;
+      console.log(requestParams.deviceId);
+      //调用后端请求接口
+      getHistoricalData(requestParams);
+
     }
 
 
