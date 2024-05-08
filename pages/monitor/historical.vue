@@ -33,9 +33,10 @@
     });
 
     //响应参数
-    let response = ref();
+    let response = ref(null);
 
     const getHistoricalData = async (requestParams : RequestParam ) => {
+      response.value = null;
       try {
         const result = await useFetch(`/api/monitor/historical-data/`, {
           method: 'GET',

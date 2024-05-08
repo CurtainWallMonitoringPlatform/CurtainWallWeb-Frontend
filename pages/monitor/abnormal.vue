@@ -38,10 +38,10 @@
     });
 
     //响应参数
-    let response = ref();
+    let response = ref(null);
 
-    //
     const getAbnormalData = async (requestParams : RequestParam ) => {
+      response.value = null;
       try {
         const result = await useFetch(`/api/monitor/abnormal-data/`, {
           method: 'GET',
