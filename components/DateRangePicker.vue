@@ -19,9 +19,6 @@ function isRangeSelected (duration: Duration) {
 
 function selectRange (duration: Duration) {
     selected.value = { start: sub(new Date(), duration), end: new Date() }
-    // 设置为指定日期的时间
-    selected.value.start.setHours(0, 0, 0, 0);
-    selected.value.end.setHours(0, 0, 0, 0);
 
     // 获取时间戳
     const start_time = selected.value.start.getTime();
@@ -30,21 +27,23 @@ function selectRange (duration: Duration) {
     // 传递值给父组件
     emit('selectRange', { start_time: start_time, end_time: end_time });
 }
+
+function pickDate(val: any){
+  const start_time = new Date(val.start).getTime();
+  const end_time = new Date(val.end).getTime();
+  emit('selectRange', { start_time: start_time, end_time: end_time });
+}
+
 </script>
 
 <template>
   <UPopover :popper="{ placement: 'bottom-start' }">
-    <UButton color="white" icon="i-heroicons-calendar-days-20-solid">
-      {{ format(selected.start, 'd MMM, yyy') }} - {{ format(selected.end, 'd MMM, yyy') }}
-    </UButton>
-    <!-- <template #default="{ open }">
-      <UButton color="gray" 
-              variant="ghost" 
-              :class="[open && 'bg-gray-50 dark:bg-gray-800']" 
-              trailing-icon="i-heroicons-chevron-down-20-solid">
+    <template #default="{ open }">
+      <UButton color="white" 
+              icon="i-heroicons-calendar-days-20-solid">
         {{ format(selected.start, 'd MMM, yyy') }} - {{ format(selected.end, 'd MMM, yyy') }}
       </UButton>
-    </template> -->
+    </template>
 
     <template #panel="{ close }">
       <div class="flex items-center sm:divide-x divide-gray-200 dark:divide-gray-800">
@@ -61,7 +60,7 @@ function selectRange (duration: Duration) {
             @click="selectRange(range.duration)"
           />
         </div>
-        <!-- <DatePicker v-model="selected" @close="close" /> -->
+        <DatePicker v-model="selected" @close="close" @update:model-value="pickDate"/>
       </div>
     </template>
   </UPopover>

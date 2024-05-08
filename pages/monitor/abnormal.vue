@@ -2,13 +2,15 @@
   <UDashboardToolbar>
     <template #left>
       <!-- 设备选择 -->
-      <DeviceSelectMenu @selectDevice="handleSelectDevice"/>
+      <DeviceSelectMenu @selectDevice="handleSelectDevice" style="width: 150px"/>
+      <!-- 方向选择 -->
+      <USelectMenu v-model="direction" :options="directions" placeholder="选择方向" style="width: 100px"/>
       <!-- 时间选择 -->
       <DateRangePicker @selectRange="handleSelectRange"></DateRangePicker>
     </template>
   </UDashboardToolbar>
 
-  <TimeCurveChart :chartData="response" v-if="response != null"></TimeCurveChart>
+  <LargeDataChart :chartData="response" :direction="direction" v-if="response != null"></LargeDataChart>
   <div class="flex items-center justify-center h-screen" v-if="response == null">
     <USkeleton class="w-4/5 h-4/5" />
   </div>
@@ -19,6 +21,9 @@
 
 <script setup lang="ts">
     import { sub } from 'date-fns';
+
+    const directions = ['X', 'Y', 'Z']
+    const direction = ref(directions[0])
 
     interface RequestParam {
       deviceId: string;
@@ -55,14 +60,7 @@
     
     onMounted(()=>{
       // 获取当前日期
-      // 获取当天0点的时间戳
-      // requestParams.value.endTime = Math.floor(Date.now());
-      // requestParams.value.startTime = requestParams.value.endTime - 24 * 60 * 60 * 7
-      // console.log(requestParams.value)
       const initialTime = ref({ start: sub(new Date(), { days: 7 }), end: new Date() })
-      // 设置为指定日期的时间
-      initialTime.value.start.setHours(0, 0, 0, 0);
-      initialTime.value.end.setHours(0, 0, 0, 0);
       // 获取时间戳
       requestParams.startTime = initialTime.value.start.getTime();
       requestParams.endTime = initialTime.value.end.getTime();

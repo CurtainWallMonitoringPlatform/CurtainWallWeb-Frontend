@@ -54,54 +54,17 @@
 
         let series: any[] = [];
         for (let name in yData) {
-            // var yline: any;
-            // var line_label: any;
-            // var label_position: any;
-            // if(name == 'x'){
-            //     yline = chartData.rmsx;
-            //     line_label = `X均值：${chartData.rmsx}`;
-            //     label_position = 'insideStartTop';
-            // }
-            // else if(name == 'y'){
-            //     yline = chartData.rmsy;
-            //     line_label = `Y均值：${chartData.rmsy}`;
-            //     label_position = 'insideMiddleTop';
-
-            // }
-            // else if(name == 'z'){
-            //     yline = chartData.rmsz;
-            //     line_label = `Z均值：${chartData.rmsz}`;
-            //     label_position = 'insideEndTop';
-
-            // }
             series.push({
                 name: name,
                 type: 'line',
                 data: yData[name],
                 smooth: false,
                 symbol: 'none', // 设置数据点的样式为 'none'
-                // markLine: {
-                //     data: [
-                //         { name: 'Average', yAxis: yline},
-                //     ],
-                //     itemStyle: {
-                //         normal: {
-                //             lineStyle: {
-                //                 color: '#ff0000',
-                //             }
-                //         }
-                //     },
-                //     label: {
-                //         position: label_position,
-                //         formatter: line_label,
-                //         color: '#ff0000',
-                //     }
-                // }
             })
         }
         option = {
             title: {
-                text: `时程曲线：设备${chartData.deviceInfo.deviceName}`,
+                text: `时程曲线：${chartData.deviceInfo.deviceName}（设备${chartData.deviceInfo.deviceId}）`,
             },
             tooltip: {
                 trigger: 'axis'
@@ -110,9 +73,9 @@
                 data: ['x', 'y', 'z']
             },
             grid: {
-                left: '2%',
-                right: '2%',
-                bottom: '3%',
+                left: '3%',
+                right: '3%',
+                bottom: '12%',
                 containLabel: true
             },
             toolbox: {
@@ -132,7 +95,18 @@
                     formatter: '{value} gal'
                 }
             },
-            series: series
+            series: series,
+            dataZoom: [
+                {
+                    type: 'inside',
+                    start: 0,
+                    end: 100
+                },
+                {
+                    start: 0,
+                    end: 100
+                }
+            ],
         };
 
         option && timeChart.setOption(option);
@@ -152,7 +126,7 @@
     #main{
         margin: 30px;
         width: 90%;
-        height: 60vh;
+        height: 90vh;
         padding: 30px;
     }
 </style>

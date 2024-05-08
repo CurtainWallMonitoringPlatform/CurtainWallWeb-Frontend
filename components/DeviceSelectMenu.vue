@@ -34,10 +34,6 @@
 <script setup lang="ts">
     import { onMounted, defineEmits } from 'vue'
 
-    onMounted(()=>{
-        //后端调用获取devices
-    })
-  
     const emit = defineEmits(['selectDevice']);
 
     interface Device {
