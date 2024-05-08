@@ -1,4 +1,3 @@
-// ~/server/api/device/addDevice.ts
 import axios from 'axios';
 import { defineEventHandler } from 'h3';
 
@@ -10,10 +9,7 @@ export default defineEventHandler(async (event: any) => {
     const query = await getQuery(event)
     console.log('query: ', query)
 
-    // 进行数据验证 ...
-    // 可以添加一些验证逻辑，确保接收到的数据是有效的
-
-    // 发起POST请求到原始设备API
+    // 发起GET请求
     const response = await axios.get(`${BASE_URL}/historical-data`, { params: query });
 
     // 检查响应状态码
@@ -22,7 +18,7 @@ export default defineEventHandler(async (event: any) => {
       return response.data;
     } else {
       // 获取历史数据失败
-      throw new Error('Failed to get histrical-data');
+      throw new Error('Failed to get historical-data');
     }
   } catch (error: any) {
     // 设置状态码并返回错误信息

@@ -96,4 +96,4 @@
       height: 150vh;
       padding: 30px;
   }
-</style>~/api/data
+</style>

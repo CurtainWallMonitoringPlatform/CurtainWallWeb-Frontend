@@ -19,20 +19,12 @@
 
 <script setup lang="ts">
     import { sub } from 'date-fns';
-    // import { GetAbnormalData } from '~/api/data';
 
     interface RequestParam {
       deviceId: string;
       startTime: string | number;
       endTime: string | number;
     }
-
-    //请求参数
-    // const requestParams = ref({
-    //     deviceId: 'A77C5238',
-    //     startTime: 0,
-    //     endTime: 0
-    // });
 
     let requestParams: RequestParam = ({
         deviceId: 'A77C5238',
@@ -43,30 +35,20 @@
     //响应参数
     let response = ref();
 
-    //获取历史数据
-    // const getAbnormalData = () =>{
-    //   response.value = null;
-    //   GetAbnormalData(requestParams.value)
-    //     .then(function(result: any){
-    //       response.value = result.data;
-    //       console.log(response.value)
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     })
-    // }
-
     //
     const getAbnormalData = async (requestParams : RequestParam ) => {
       try {
-        response.value = await useFetch(`/api/monitor/hitorical-data/`, {
+        const result = await useFetch(`/api/monitor/abnormal-data/`, {
           method: 'GET',
           query: requestParams,
         });
-        console.log('aaaaaaaaaaaaaaaaaaaa',response.value)
+        response.value = result.data.value.data;
+        if(response.value == null){
+        //如果没有data数据会报错？？
+        }
 
       } catch (error) {
-        console.error('Error updating device info:', error);
+        console.error('Error get abnormal-data:', error);
       }
     };
 
@@ -120,4 +102,4 @@
       height: 150vh;
       padding: 30px;
   }
-</style>~/api/data
+</style>
