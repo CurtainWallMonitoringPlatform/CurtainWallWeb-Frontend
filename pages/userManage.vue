@@ -78,7 +78,6 @@
 
 <script setup>
 import { ref, reactive, onMounted, nextTick } from "vue";
-import { GetAuth, updateUserPermissions } from "@/server/api/public.js";
 import axios from "axios";
 
 const filterKeyword = ref("");

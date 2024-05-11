@@ -114,7 +114,7 @@
 import userService from "@/server/api/user.js";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElLoading } from "element-plus";
 // import store from '@/store/index.js'
 
 // const GoToLayout = () => {
@@ -149,7 +149,13 @@ const focusNextInput = () => {
 
 //todo: 暂时不发请求，需要统一api，先直接写死
 const login = async () => {
+  let loadingInstance = null;
   try {
+    loadingInstance = ElLoading.service({
+      lock: true,
+      text: "正在登录...",
+      background: "rgba(0, 0, 0, 0.7)",
+    });
     const response = await $fetch("/api/account/login", {
       method: "POST",
       body: {
@@ -157,6 +163,7 @@ const login = async () => {
         password: loginForm.value.password,
       },
     });
+    if (loadingInstance) loadingInstance.close();
     if (response.authentication) {
       localStorage.setItem("authToken", response.token);
       localStorage.setItem("email", loginForm.value.email);
