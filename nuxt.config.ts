@@ -13,7 +13,6 @@ export default defineNuxtConfig({
       '/api/account': {
         target: 'http://127.0.0.1:8000/account',
          changeOrigin: true,
-        // pathRewrite: { '^/api': '' }, // 将路径中的 /api 替换为空，
       },
     },
   },

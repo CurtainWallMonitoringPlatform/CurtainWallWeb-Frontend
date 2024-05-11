@@ -4,6 +4,7 @@ const { isDashboardSearchModalOpen } = useUIState()
 const { metaSymbol } = useShortcuts()
 import { useRouter } from 'vue-router';
 
+const loginUser = ref(localStorage.getItem("email"));
 const router = useRouter();
 const state = reactive({
   name: 'Curtain Wall Admin',
@@ -74,11 +75,11 @@ const items = computed(() => [
     <template #account>
       <div class="text-left">
         <p>
-            已登录为
+            已登录为 {{ loginUser }}
         </p>
-        <p class="truncate font-medium text-gray-900 dark:text-white">
-            {{ state.email }}
-        </p>
+        <!-- <p class="truncate font-medium text-gray-900 dark:text-white">
+            
+        </p> -->
       </div>
     </template>
   </UDropdown>
