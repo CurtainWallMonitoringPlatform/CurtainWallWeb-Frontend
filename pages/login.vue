@@ -7,22 +7,37 @@
         <el-form class="form1">
           <h2>欢迎！请登录您的账户</h2>
           <el-form-item>
-            <el-input v-model="loginForm.email" placeholder="邮箱" required @keydown.enter="focusNextInput"
-              ref="inputEmail" />
+            <el-input
+              v-model="loginForm.email"
+              placeholder="邮箱"
+              required
+              @keydown.enter="focusNextInput"
+              ref="inputEmail"
+            />
           </el-form-item>
 
           <el-form-item>
-            <el-input v-model="loginForm.password" type="password" placeholder="密码" required @keydown.enter="login"
-              ref="inputPassword" />
+            <el-input
+              v-model="loginForm.password"
+              type="password"
+              placeholder="密码"
+              required
+              @keydown.enter="login"
+              ref="inputPassword"
+            />
           </el-form-item>
 
           <el-form-item @click="login">
             <el-button>登录</el-button>
           </el-form-item>
 
-          <el-form-item style="position:absolute;top:80%">
-            <p @click="toggleForm" style="color: rgb(193, 193, 193);
-                 cursor: pointer;">没有账户？点击注册</p>
+          <el-form-item style="position: absolute; top: 80%">
+            <p
+              @click="toggleForm"
+              style="color: rgb(193, 193, 193); cursor: pointer"
+            >
+              没有账户？点击注册
+            </p>
           </el-form-item>
         </el-form>
       </form>
@@ -34,34 +49,59 @@
         <el-form class="form2">
           <h2>欢迎！请输入注册信息</h2>
           <el-form-item>
-            <el-input v-model="registerForm.email" placeholder="邮箱" required ref="inputEmail" />
+            <el-input
+              v-model="registerForm.email"
+              placeholder="邮箱"
+              required
+              ref="inputEmail"
+            />
           </el-form-item>
 
           <el-form-item>
             <el-input v-model="registerForm.code" placeholder="验证码" required>
               <template #suffix>
-                <button @click.prevent="sendVerificationCode" :disabled="disableButton"
-                  style="color: white;background-color: lightgrey;">{{ buttonText }}</button>
+                <button
+                  @click.prevent="sendVerificationCode"
+                  :disabled="disableButton"
+                  style="color: white; background-color: lightgrey"
+                >
+                  {{ buttonText }}
+                </button>
               </template>
             </el-input>
           </el-form-item>
 
           <el-form-item>
-            <el-input v-model="registerForm.password" type="password" placeholder="输入密码" required ref="inputPassword" />
+            <el-input
+              v-model="registerForm.password"
+              type="password"
+              placeholder="输入密码"
+              required
+              ref="inputPassword"
+            />
           </el-form-item>
 
           <el-form-item>
-            <el-input v-model="registerForm.confirmPassword" type="password" placeholder="确认密码" required
-              ref="inputPassword" />
+            <el-input
+              v-model="registerForm.confirmPassword"
+              type="password"
+              placeholder="确认密码"
+              required
+              ref="inputPassword"
+            />
           </el-form-item>
 
           <el-form-item>
             <el-button @click="register">注册</el-button>
           </el-form-item>
 
-          <el-form-item style="position:absolute;top:85%">
-            <p @click="toggleForm" style="color: rgb(193, 193, 193);
-                 cursor: pointer;">已有账户？点此登录</p>
+          <el-form-item style="position: absolute; top: 85%">
+            <p
+              @click="toggleForm"
+              style="color: rgb(193, 193, 193); cursor: pointer"
+            >
+              已有账户？点此登录
+            </p>
           </el-form-item>
         </el-form>
       </form>
@@ -71,9 +111,10 @@
 </template>
 
 <script setup>
-import userService from '@/server/api/user.js';
-import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router';
+import userService from "@/server/api/user.js";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 // import store from '@/store/index.js'
 
 // const GoToLayout = () => {
@@ -92,52 +133,65 @@ const inputEmail = ref(null);
 const inputPassword = ref(null);
 
 const loginForm = ref({
-  email: '',
-  password: '',
+  email: "",
+  password: "",
 });
 
 const registerForm = ref({
-  email: '',
-  code: '',
-  password: '',
+  email: "",
+  code: "",
+  password: "",
 });
 
 const focusNextInput = () => {
   inputPassword.value.focus();
-}
+};
 
 //todo: 暂时不发请求，需要统一api，先直接写死
 const login = async () => {
-  // const loginSuccess = await userStore.login(loginForm.value.email, loginForm.value.password);
-  const loginSuccess = true;
-  if (loginSuccess) {
-    console.log("login success");
-    // const user = JSON.parse(localStorage.getItem('user')).userInfo.token;
-    // const result = await userStore.getCurrentInfo(user);
-    // 触发 mutation 更新 store 中的数据
-    // store.commit('SET_USERNAME', loginForm.value.email);
-    // store.commit('SET_EMAIL', loginForm.value.email);
-    localStorage.setItem('authToken', "1111");
-    router.push({ path: '/' });
-  } else {
-    console.error(error.message);
+  try {
+    const response = await $fetch("/api/account/login", {
+      method: "POST",
+      body: {
+        username: loginForm.value.email,
+        password: loginForm.value.password,
+      },
+    });
+    if (response.authentication) {
+      localStorage.setItem("authToken", response.token);
+      localStorage.setItem("email", loginForm.value.email);
+      console.log("authToken stored:", localStorage.getItem("authToken"));
+      router.push({ path: "/" });
+    } else {
+      console.log("登陆失败");
+      ElMessage.error("登录失败，请检查您的用户名和密码。");
+    }
+  } catch (error) {
+    console.error(error);
+    ElMessage.error(error.message || "登录过程中发生错误");
   }
 };
 
 const disableButton = ref(false);
-const buttonText = ref('发送验证码');
+const buttonText = ref("发送验证码");
 const countdown = ref(60);
 
 const sendVerificationCode = async () => {
   if (disableButton.value) {
     return;
   }
-  //console.log(disableButton.value)
-  const success = await userStore.sendVerificationCode(registerForm.value.email);
-
-  if (success) {
-    disableButton.value = true;
-    startCountdown();
+  try {
+    const response = await $fetch("/api/account/sendCode", {
+      method: "POST",
+      body: { email: registerForm.value.email },
+    });
+    if (response) {
+      disableButton.value = true;
+      startCountdown();
+    }
+  } catch (error) {
+    console.error(error);
+    ElMessage.error(error.message || "验证码发送错误");
   }
 };
 
@@ -157,17 +211,37 @@ const startCountdown = () => {
 const resetCountdown = () => {
   countdown.value = 60;
   disableButton.value = false;
-  buttonText.value = '发送验证码';
+  buttonText.value = "发送验证码";
 };
 
-
 const register = async () => {
-  // 实现注册逻辑
-  const success = await userStore.register(registerForm.value.email, registerForm.value.code, registerForm.value.password);
-
-  if (success) {
-    toggleForm;
+  try {
+    const response = await $fetch("/api/account/validate", {
+      method: "POST",
+      body: {
+        email: registerForm.value.email,
+        code: registerForm.value.code,
+        password: registerForm.value.password,
+      },
+    });
+    if (response) {
+      toggleForm;
+    }
+  } catch (error) {
+    console.error(error);
+    ElMessage.error(error.message || "注册错误");
   }
+
+  // 实现注册逻辑
+  // const success = await userStore.register(
+  //   registerForm.value.email,
+  //   registerForm.value.code,
+  //   registerForm.value.password
+  // );
+
+  // if (success) {
+  //   toggleForm;
+  // }
 };
 
 const logout = () => {
@@ -182,12 +256,11 @@ const toggleForm = () => {
 onMounted(() => {
   // userStore.clearUserInfo()
 });
-
 </script>
 
 <style scoped>
 .page {
-  background-image: url('/assets/images/background.png');
+  background-image: url("/assets/images/background.png");
   background-size: cover;
   position: fixed;
   top: 0;
@@ -206,7 +279,7 @@ onMounted(() => {
   align-items: center;
 }
 
-.el-form-item+.el-form-item {
+.el-form-item + .el-form-item {
   margin-top: 20px;
   /* 设置间距大小 */
 }
@@ -238,7 +311,6 @@ onMounted(() => {
   color: white;
   border-color: transparent;
 }
-
 
 .el-button:hover {
   background-color: rgb(6, 6, 117);

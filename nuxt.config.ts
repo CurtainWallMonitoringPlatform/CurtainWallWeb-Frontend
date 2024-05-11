@@ -10,9 +10,10 @@ export default defineNuxtConfig({
   ssr: false,// 不开启服务端渲染
   nitro: {
     devProxy: {
-      '/account/login': {
-        target: 'http://127.0.0.1:8000',
-        changeOrigin: true,
+      '/api/account': {
+        target: 'http://127.0.0.1:8000/account',
+         changeOrigin: true,
+        // pathRewrite: { '^/api': '' }, // 将路径中的 /api 替换为空，
       },
     },
   },

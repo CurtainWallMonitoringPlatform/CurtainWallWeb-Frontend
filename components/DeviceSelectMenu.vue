@@ -33,32 +33,29 @@
   
 <script setup lang="ts">
     import { onMounted, defineEmits } from 'vue'
-    import { GetDeviceList } from '~/server/api/device';
 
     const emit = defineEmits(['selectDevice']);
 
     interface Device {
         deviceName: string;
         deviceId: string;
-        offset: string;
-        lowerOuliter: string;
-        higherOutlier: string;
+        offset: number | string; // 这里我假设 offset 是一个数字，如果是字符串请保留您原来的类型
+        lowerOuliter: number | string;
+        higherOuliter: number | string;
     }
 
     // 使用初始空数组并指定类型
     let deviceList = ref<Device[]>([]);
 
-    onMounted(async ()=>{
-        //后端调用获取devices
-        try {
-            const devices = await GetDeviceList();
-            deviceList.value = devices;
-            console.log(deviceList.value);
-        } catch (error) {
-            console.error('Error getting device list:', error);
-        }
-    })
-  
+    const fetchDeviceList = async () => {
+    try {
+        const response = await useFetch('/api/device/all');
+        deviceList.value = response.data.value as unknown as Device[];
+        console.log(deviceList.value);
+    } catch (error) {
+        console.error('Error getting device list:', error);
+    }
+    };
 
     //选中的设备
     const selectedDevice = ref({
@@ -66,6 +63,12 @@
         deviceId: 'A77C5238',
         online: true,
     });
+
+    onMounted(() =>{
+        fetchDeviceList();
+    })
+
+
 
     watch(selectedDevice, (newValue) => {
         emit('selectDevice', newValue);

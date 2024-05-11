@@ -1,7 +1,7 @@
 // 管理用户数据
-import Request from "@/server/request.ts"; 
+// import Request from "@/server/request.ts"; 
 // import Request from "@/server/accountRequest.js"; 
-import Message from "@/server/Message.js"  // 在每个 api 文件里都要引入这两个文件
+// import Message from "@/server/Message.js"  // 在每个 api 文件里都要引入这两个文件
 
 const userService = {
     async login(email, password) {
