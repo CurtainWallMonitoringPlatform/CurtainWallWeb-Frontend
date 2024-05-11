@@ -108,10 +108,10 @@ const focusNextInput = () => {
 
 //todo: 暂时不发请求，需要统一api，先直接写死
 const login = async () => {
-  console.log("click login");
   // const loginSuccess = await userStore.login(loginForm.value.email, loginForm.value.password);
   const loginSuccess = true;
   if (loginSuccess) {
+    console.log("login success");
     // const user = JSON.parse(localStorage.getItem('user')).userInfo.token;
     // const result = await userStore.getCurrentInfo(user);
     // 触发 mutation 更新 store 中的数据

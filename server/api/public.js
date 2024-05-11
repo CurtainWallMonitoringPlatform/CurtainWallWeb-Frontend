@@ -1,4 +1,4 @@
-import Request from "@/server/api/request.js";  // 在每个 api 文件里都要引入这两个文件
+import Request from "@/server/request.ts";  // 在每个 api 文件里都要引入这两个文件
 import Message from "@/server/Message.js"  // 在每个 api 文件里都要引入这两个文件
 
 // 图像上传内部接口
