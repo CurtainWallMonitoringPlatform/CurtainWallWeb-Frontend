@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   extends: [process.env.NUXT_UI_PRO_PATH || '@nuxt/ui-pro'],
   modules: ['@nuxt/ui', '@nuxt/fonts', '@vueuse/nuxt', "@nuxt/image", '@element-plus/nuxt','@pinia/nuxt'],
+  plugins: [
+    '~/plugins/cleanup.js'
+  ],
   ui: {
     icons: ['heroicons', 'simple-icons'],
     safelistColors: ['primary', 'red', 'orange', 'green']
