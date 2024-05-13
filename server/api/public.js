@@ -1,5 +1,5 @@
-import Request from "@/server/api/request.js";  // 在每个 api 文件里都要引入这两个文件
-import Message from "@/server/Message.js"  // 在每个 api 文件里都要引入这两个文件
+// import Request from "@/server/request.ts";  // 在每个 api 文件里都要引入这两个文件
+// import Message from "@/server/Message.js"  // 在每个 api 文件里都要引入这两个文件
 
 // 图像上传内部接口
 //！！接口与后端对应，如需使用请对接口地址等信息做更改（同时更改utils下的Request.js）

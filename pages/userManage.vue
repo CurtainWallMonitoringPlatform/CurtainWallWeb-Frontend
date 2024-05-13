@@ -8,15 +8,18 @@
         class="input-with-select"
       >
         <template #append>
-          <el-button @click="searchAction">
-            搜索
-          </el-button>
+          <el-button @click="searchAction"> 搜索 </el-button>
         </template>
       </el-input>
     </div>
 
     <div class="table_container">
-      <el-table border :data="itemList" style="width: 100%" :table-layout="auto">
+      <el-table
+        border
+        :data="itemList"
+        style="width: 100%"
+        :table-layout="auto"
+      >
         <!-- <el-table-column prop="id" label="ID"></el-table-column> -->
         <!-- <el-table-column prop="username" label="Name"></el-table-column> -->
         <el-table-column prop="email" label="Email"></el-table-column>
@@ -66,7 +69,7 @@
               v-model="row.access_system_e"
               @change="() => handleSwitchChange(row, 'access_system_e')"
             ></el-switch>
-          </template> 
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -75,8 +78,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, nextTick } from "vue";
-import { GetAuth, updateUserPermissions } from "@/server/api/public.js";
-
+import axios from "axios";
 
 const filterKeyword = ref("");
 
@@ -88,20 +90,26 @@ const handleSelect = (key, keyPath) => {
 
 const itemList = ref([]);
 
-const handleSwitchChange = (item, key) => {
+const handleSwitchChange = async (item, key) => {
   const dataToSend = {
-    [item.email]: { // 使用动态键名设置邮箱地址
-      [key]: item[key] // 设置对应权限的新值
-    }
+    [item.email]: {
+      // 使用动态键名设置邮箱地址
+      [key]: item[key], // 设置对应权限的新值
+    },
   };
-  updateUserPermissions(dataToSend)
-    .then(function (result) {
-      console.log(result.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-    .finally(() => {});
+  try {
+    const response = await $fetch("/api/account/super/updatePermission", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+      body: dataToSend,
+    });
+    ElMessage.success("权限修改成功");
+  } catch (error) {
+    console.error(error);
+    ElMessage.error(error.message || "权限修改错误");
+  }
 };
 
 const formData = reactive({
@@ -124,22 +132,38 @@ const enterDown = async () => {
   //进行搜索操作
 };
 
-//发送请求
-GetAuth()
-  .then(function (result) {
-    // itemList.value = result.data.users;
-    itemList.value = Object.entries(result.data).map(([email, permissions]) => ({
-        email, 
-        ...permissions // 把所有权限展开成为单独的属性
-      }));
-    console.log(itemList.value);
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
-  .finally(() => {
-    // loading.value = false;
-  });
+const getAllPermission = async () => {
+  try {
+    const authToken = localStorage.getItem("authToken");
+    const response = await axios.get("/api/account/super/getAllPermissions", {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    if (response.status === 200) {
+      console.log("Permissions:", response);
+      itemList.value = Object.entries(response.data).map(
+        ([email, permissions]) => ({
+          email,
+          ...permissions, // 把所有权限展开成为单独的属性
+        })
+      );
+    } else {
+      console.error("Failed to fetch permissions:", response);
+      ElMessage.error("获取权限失败");
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || error.message;
+      console.error("Error:", message);
+      ElMessage.error(message);
+    } else {
+      console.error("Unexpected error:", error);
+      ElMessage.error("未预料到的错误");
+    }
+  }
+};
+getAllPermission();
 </script>
 
 <style scoped>
@@ -186,5 +210,4 @@ GetAuth()
   border: 0;
   color: white;
 }
-
 </style>

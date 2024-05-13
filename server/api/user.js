@@ -1,10 +1,12 @@
 // 管理用户数据
-import Request from "@/server/request.ts"; 
-import Message from "@/server/Message.js"  // 在每个 api 文件里都要引入这两个文件
+// import Request from "@/server/request.ts"; 
+// import Request from "@/server/accountRequest.js"; 
+// import Message from "@/server/Message.js"  // 在每个 api 文件里都要引入这两个文件
 
 const userService = {
     async login(email, password) {
         try {
+            console.log("login")
             const response = await Request.post('/account/login', { "username": email, "password": password });
             if (response.status === 200) {
                 // 存储Token和email到localStorage
