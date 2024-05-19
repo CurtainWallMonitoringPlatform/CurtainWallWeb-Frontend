@@ -8,7 +8,7 @@
     </template>
   </UDashboardToolbar>
   
-  <TimeCurveChart :chartData="response" v-if="response != null"></TimeCurveChart>
+  <MonitorTimeCurveChart :chartData="response" v-if="response != null"></MonitorTimeCurveChart>
   <div class="flex items-center justify-center h-screen" v-if="response == null">
     <USkeleton class="w-4/5 h-4/5" />
   </div>

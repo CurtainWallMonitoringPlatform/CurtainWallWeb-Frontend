@@ -1,13 +1,13 @@
 <!-- DeviceSelectMenu.vue -->
 <template>
     <USelectMenu
-        searchable
         v-model="selectedDevice"
         :options="deviceList"
         option-attribute="deviceId"
-        placeholder="select device"
+        placeholder="选择设备"
+        icon="i-heroicons-presentation-chart-line-20-solid"
     >
-        <template #label>
+        <template #label v-if="selectedDevice.deviceName!=''">
         <span
             :class="[
             true ? 'bg-green-400' : 'bg-gray-200',
@@ -32,7 +32,7 @@
   </template>
   
 <script setup lang="ts">
-    import { onMounted, defineEmits } from 'vue'
+    import { defineEmits } from 'vue'
 
     const emit = defineEmits(['selectDevice']);
 
@@ -47,31 +47,22 @@
     // 使用初始空数组并指定类型
     let deviceList = ref<Device[]>([]);
 
-    const fetchDeviceList = async () => {
-    try {
-        const response = await useFetch('/api/device/all');
-        deviceList.value = response.data.value as unknown as Device[];
-        console.log(deviceList.value);
-    } catch (error) {
-        console.error('Error getting device list:', error);
-    }
-    };
-
     //选中的设备
     const selectedDevice = ref({
-        deviceName: 'A楼01',
-        deviceId: 'A77C5238',
+        deviceName: '',
+        deviceId: '',
         online: true,
     });
 
-    onMounted(() =>{
-        fetchDeviceList();
+    useFetch('/api/device/all', {
+        key: 'device-list', // 用于缓存和重新获取数据的键
+        immediate: true, // 立即执行数据获取
+    }).then((response) => {
+        deviceList.value = response.data.value as Device[]
     })
 
-
-
     watch(selectedDevice, (newValue) => {
-        emit('selectDevice', newValue);
-    });
+        emit('selectDevice', newValue)
+    })
 
 </script>

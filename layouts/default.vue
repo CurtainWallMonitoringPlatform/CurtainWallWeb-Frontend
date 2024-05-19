@@ -41,7 +41,18 @@ const links = [{
     text: '设备中心',
     shortcuts: ['G', 'E']
   }
-}, {
+}, 
+{
+  id: 'alarm',
+  label: '报警中心',
+  icon: 'i-heroicons-exclamation-triangle',
+  to: '/alarm',
+  tooltip: {
+    text: '报警中心',
+    shortcuts: ['G', 'W']
+  }
+},
+{
   id: 'settings',
   label: '设置',
   to: '/settings',
