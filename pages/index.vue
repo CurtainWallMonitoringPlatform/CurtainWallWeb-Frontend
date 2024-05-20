@@ -68,7 +68,8 @@ const modules = reactive([
   {
     title: "幕墙材质分割",
     description: "给定一张建筑幕墙图片，分割出其中的各种材质",
-    to: "https://github.com/vueuse/vueuse",
+    // to: "",
+    target_address: "/segment",
     permissionKey: "access_system_f",
     icon: "i-simple-icons-homeassistantcommunitystore",
   },
