@@ -102,23 +102,6 @@ const links = reactive([
         },
       },
       {
-        id: "segment",
-        label: "幕墙分割系统",
-        icon: "i-heroicons-building-office",
-        to: "/segment",
-        children: [
-          {
-            label: "幕墙分割识别",
-            to: "/segment",
-            exact: true,
-          },
-          {
-            label: "查看历史记录",
-            to: "/segment/history",
-          }
-        ]
-      },
-      {
         id: "settings",
         label: "设置",
         to: "/settings",
@@ -144,6 +127,23 @@ const links = reactive([
       text: "风振数据检测",
       // shortcuts: ["G", "H"],
     },
+  },
+  {
+    id: "segment",
+    label: "幕墙分割系统",
+    icon: "i-heroicons-building-office",
+    to: "/segment",
+    children: [
+      {
+        label: "幕墙分割识别",
+        to: "/segment",
+        exact: true,
+      },
+      {
+        label: "查看历史记录",
+        to: "/segment/history",
+      }
+    ]
   },
   {
     id: "userInfo",
