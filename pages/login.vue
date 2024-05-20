@@ -263,6 +263,10 @@ const toggleForm = () => {
 onMounted(() => {
   // userStore.clearUserInfo()
 });
+
+definePageMeta({
+  layout: false,
+});
 </script>
 
 <style scoped>

@@ -39,7 +39,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="污渍裂缝识别权限" prop="access_system_b">
+        <el-table-column label="石材污渍权限" prop="access_system_b">
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_b"
@@ -47,7 +47,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="玻璃自爆权限" prop="access_system_c">
+        <el-table-column label="石材裂缝权限" prop="access_system_c">
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_c"
@@ -55,7 +55,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="玻璃幕墙分割权限" prop="access_system_d">
+        <el-table-column label="玻璃自爆权限" prop="access_system_d">
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_d"
@@ -63,11 +63,27 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="异常风振数据权限" prop="access_system_e">
+        <el-table-column label="风振数据权限" prop="access_system_e">
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_e"
               @change="() => handleSwitchChange(row, 'access_system_e')"
+            ></el-switch>
+          </template>
+        </el-table-column>
+        <el-table-column label="幕墙材质分割权限" prop="access_system_f">
+          <template #default="{ row }">
+            <el-switch
+              v-model="row.access_system_f"
+              @change="() => handleSwitchChange(row, 'access_system_f')"
+            ></el-switch>
+          </template>
+        </el-table-column>
+        <el-table-column label="玻璃平整度权限" prop="access_system_g">
+          <template #default="{ row }">
+            <el-switch
+              v-model="row.access_system_g"
+              @change="() => handleSwitchChange(row, 'access_system_g')"
             ></el-switch>
           </template>
         </el-table-column>
@@ -142,12 +158,13 @@ const getAllPermission = async () => {
     });
     if (response.status === 200) {
       console.log("Permissions:", response);
-      itemList.value = Object.entries(response.data).map(
+      itemList.value = Object.entries(response.data.data).map(
         ([email, permissions]) => ({
           email,
           ...permissions, // 把所有权限展开成为单独的属性
         })
       );
+      // console.log(itemList.value)
     } else {
       console.error("Failed to fetch permissions:", response);
       ElMessage.error("获取权限失败");
