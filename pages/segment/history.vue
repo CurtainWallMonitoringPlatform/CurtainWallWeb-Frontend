@@ -1,37 +1,36 @@
 <template>
-    <div class="datepicker-wrap">
-        <div class="block">
-            <el-date-picker
-                v-model="pickedDate"
-                type="date"
-                placeholder="请选择日期"
-            />
+    <div class="history-wrap">
+        <div class="datepicker-wrap">
+            <div class="block">
+                <el-date-picker v-model="pickedDate" type="date" placeholder="请选择日期" />
+            </div>
         </div>
-    </div>
-    <div class="result-wrap">
-        <el-row :gutter="20">
-            <el-col class="col-wrap" :span="6" v-for="(item, index) in placeholders" :key="index">
-                <el-card class="card-wrap">
-                    <div v-if="!item.loaded" class="loading-placeholder">
-                        <img src="@/public/assets/images/Wedges-3s-200px.gif"/>
-                    </div>
-                    <img v-else :src="item.image_url" alt="Thumbnail" @click="showImageDetails(item)">
-                </el-card>
-            </el-col>
-        </el-row>
-        <!-- 弹窗显示图片详情 -->
-        <el-dialog v-model="dialogVisible" width="50%">
-            <img :src="selectedImage.image_url" alt="Selected Image" style="width: 100%">
-            <el-divider></el-divider>
+        <el-upload></el-upload>
+        <div class="result-wrap">
             <el-row :gutter="20">
-                <el-col :span="6" v-for="(segment, index) in selectedImage.segments" :key="index">
-                    <el-card class="small-card-wrap">
-                        <img :src="segment" alt="Segment Image" style="width: 100%">
-                        <!-- <p>{{ label_list[index] }}</p> -->
+                <el-col class="col-wrap" :span="6" v-for="(item, index) in placeholders" :key="index">
+                    <el-card class="card-wrap">
+                        <div v-if="!item.loaded" class="loading-placeholder">
+                            <img src="@/public/assets/images/Wedges-3s-200px.gif" />
+                        </div>
+                        <img v-else :src="item.image_url" alt="Thumbnail" @click="showImageDetails(item)">
                     </el-card>
                 </el-col>
             </el-row>
-        </el-dialog>
+            <!-- 弹窗显示图片详情 -->
+            <el-dialog v-model="dialogVisible" width="50%">
+                <img :src="selectedImage.image_url" alt="Selected Image" style="width: 100%">
+                <el-divider></el-divider>
+                <el-row :gutter="20">
+                    <el-col :span="6" v-for="(segment, index) in selectedImage.segments" :key="index">
+                        <el-card class="small-card-wrap">
+                            <img :src="segment" alt="Segment Image" style="width: 100%">
+                            <!-- <p>{{ label_list[index] }}</p> -->
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </el-dialog>
+        </div>
     </div>
 </template>
 
@@ -97,23 +96,35 @@ watch(pickedDate, async (newDate) => {
 </script>
 
 <style>
+.history-wrap {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .card-wrap {
     margin: 5px 5px 20px;
     background-color: rgba(240, 240, 240, 0.3);
     /* width: 340px;
     height: 250px; */
 }
+
 .small-card-wrap {
     margin: 5px 5px 20px;
 }
+
 .loading-placeholder {
     height: 225px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .datepicker-wrap {
     margin-top: 60px;
     margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>

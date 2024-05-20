@@ -4,9 +4,9 @@
         <!-- <el-button @click="GoToDash">进入仪表盘</el-button> -->
         <div class="container">
             <ImgUploader ref="ImgUploadRef" @uploadPicture="upload" @onCancel="cancel" />
-        </div>
-        <div class="progress-wrap" v-if="showProgress">
-            <UProgress animation="carousel"></UProgress>
+            <div class="progress-wrap" v-if="showProgress">
+                <UProgress animation="carousel"></UProgress>
+            </div>
         </div>
         <!-- <div class="result-container" v-if="ImgResult">
         <ImgList :data="ImgResult"/>
@@ -209,16 +209,18 @@ const handleSwitchChange = (newValue) => {
 
 .progress-wrap {
     /* max-width: 200px; */
-    width: auto;
+    width: 25%;
     height: auto;
-    margin: 20px auto 0;
+    margin: 30px auto 0;
     /* 上面的元素距离 .progress-wrap 的固定距离 */
-    flex-direction: column;
-    justify-content: space-between;
-    object-fit: cover;
-    display: flex;
-    position: relative;
-    top: 0;
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
+    /* object-fit: cover; */
+    /* display: flex; */
+    /* position: relative; */
+    /* top: 0; */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
