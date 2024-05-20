@@ -236,8 +236,11 @@ const handleSwitchChange = (newValue) => {
 }
 
 .carousel {
-    min-height: 600px;
     flex: 1;
+}
+
+::v-deep div>.el-carousel__container {
+    height: 600px !important;
 }
 
 .switch-container {
