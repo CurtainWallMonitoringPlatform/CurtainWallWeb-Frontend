@@ -130,9 +130,10 @@ const links = reactive([
   },
   {
     id: "segment",
-    label: "幕墙分割系统",
+    label: "幕墙材质分割",
     icon: "i-heroicons-building-office",
     to: "/segment",
+    defaultOpen: false,
     children: [
       {
         label: "幕墙分割识别",
@@ -208,6 +209,9 @@ const getUserAuth = async () => {
     }
     if (!userAuth.value.access_system_e) {
       removeLinkById("wind");
+    }
+    if (!userAuth.value.access_system_f) {
+      removeLinkById("segment");
     }
     if (!userAuth.value.is_superuser) {
       removeLinkById("userManage");
