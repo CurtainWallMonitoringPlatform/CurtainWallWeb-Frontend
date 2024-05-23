@@ -1,7 +1,7 @@
 import axios from "axios";
 import { defineEventHandler, readBody } from "h3";
 
-const BASE_URL = "http://127.0.0.1:8000/account";
+const BASE_URL = "http://111.231.168.12:8000/account";
 
 export default defineEventHandler(async (event: any) => {
   try {

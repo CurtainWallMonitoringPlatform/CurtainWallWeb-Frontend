@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   nitro: {
     devProxy: {
       '/api/account': {
-        target: 'http://127.0.0.1:8000/account',
+        target: 'http://111.231.168.12:8000/account',
          changeOrigin: true,
       },
     },
