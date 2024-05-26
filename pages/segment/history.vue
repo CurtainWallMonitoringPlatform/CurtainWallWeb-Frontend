@@ -19,12 +19,12 @@
             </el-row>
             <!-- 弹窗显示图片详情 -->
             <el-dialog v-model="dialogVisible" width="50%">
-                <img :src="selectedImage.image_url" alt="Selected Image" style="width: 100%">
+                <img :src="selectedImage.image_url" class="img-wrap" alt="Selected Image" style="width: 100%">
                 <el-divider></el-divider>
                 <el-row :gutter="20">
                     <el-col :span="6" v-for="(segment, index) in selectedImage.segments" :key="index">
                         <el-card class="small-card-wrap">
-                            <img :src="segment" alt="Segment Image" style="width: 100%">
+                            <img :src="segment" alt="Segment Image">
                             <!-- <p>{{ label_list[index] }}</p> -->
                         </el-card>
                     </el-col>
@@ -97,10 +97,15 @@ watch(pickedDate, async (newDate) => {
 
 <style>
 .history-wrap {
+    width: 80%;
     display: flex;
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
+}
+
+.result-wrap {
+    width: 100%;
 }
 
 .card-wrap {
@@ -112,6 +117,12 @@ watch(pickedDate, async (newDate) => {
 
 .small-card-wrap {
     margin: 5px 5px 20px;
+}
+
+.img-wrap {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .loading-placeholder {
