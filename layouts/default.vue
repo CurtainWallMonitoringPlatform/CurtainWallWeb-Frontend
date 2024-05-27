@@ -235,6 +235,9 @@ const getUserAuth = async () => {
     if (!userAuth.value.access_system_a) {
       removeLinkById("3DBuildingModel");
     }
+    if (!userAuth.value.access_system_d) {
+      removeLinkById("explosion");
+    }
     if (!userAuth.value.access_system_e) {
       removeLinkById("wind");
     }

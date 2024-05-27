@@ -54,7 +54,8 @@ const modules = reactive([
   {
     title: "玻璃自爆",
     description: "通过图片检测玻璃内爆风险",
-    to: "https://github.com/nuxt-community/eslint-module",
+    target_address: "/explosion",
+    // to: "https://github.com/nuxt-community/eslint-module",
     permissionKey: "access_system_d",
     icon: "i-simple-icons-affinitydesigner",
   },
