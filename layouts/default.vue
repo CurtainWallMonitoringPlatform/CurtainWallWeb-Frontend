@@ -66,7 +66,7 @@ const links = reactive([
     },
   },
   {
-    id: "3D建筑模型",
+    id: "3DBuildingModel",
     label: "3D建筑模型",
     // to: "/userManage",
     icon: "i-simple-icons-googlehome",
@@ -231,6 +231,9 @@ const getUserAuth = async () => {
     userAuth.value = response.data.data;
     if (userAuth.value.is_superuser) {
       return;
+    }
+    if (!userAuth.value.access_system_a) {
+      removeLinkById("3DBuildingModel");
     }
     if (!userAuth.value.access_system_e) {
       removeLinkById("wind");

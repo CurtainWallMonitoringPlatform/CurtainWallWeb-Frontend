@@ -85,7 +85,11 @@ const modules = reactive([
 
 const checkPermissionAndRedirect = (module) => {
   if (userAuth.value.is_superuser || userAuth.value[module.permissionKey]) {
-    router.push({ path: module.target_address });
+    if (module.title === "3D建筑模型") {
+      window.location.href = module.target_address; // 使用window.location.href进行跳转
+    } else {
+      router.push({ path: module.target_address }); // 使用router.push进行跳转
+    }
   } else {
     ElMessage.error("您没有权限访问此模块");
   }
