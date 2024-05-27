@@ -52,12 +52,12 @@ const modules = reactive([
     icon: "i-simple-icons-affinitypublisher",
   },
   {
-    title: "玻璃自爆",
+    title: "玻璃内爆检测",
     description: "通过图片检测玻璃内爆风险",
     target_address: "/explosion",
     // to: "https://github.com/nuxt-community/eslint-module",
     permissionKey: "access_system_d",
-    icon: "i-simple-icons-affinitydesigner",
+    icon: "i-heroicons-fire",
   },
   {
     title: "风振数据检测",

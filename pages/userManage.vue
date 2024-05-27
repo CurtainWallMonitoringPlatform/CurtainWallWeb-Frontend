@@ -55,7 +55,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="玻璃自爆权限" prop="access_system_d">
+        <el-table-column label="玻璃内爆检测权限" prop="access_system_d">
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_d"
