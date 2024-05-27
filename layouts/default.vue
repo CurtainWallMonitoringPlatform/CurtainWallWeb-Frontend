@@ -48,6 +48,12 @@ const checkPressmission = async () => {
   }
 };
 
+const goto3DModel = () => {
+  // router.push("http://localhost:5173")
+  // window.open("http://localhost:5173", "_blank");
+  window.location.href = "http://localhost:5173";
+};
+
 const links = reactive([
   {
     id: "home",
@@ -58,6 +64,16 @@ const links = reactive([
       text: "首页",
       shortcuts: ["G", "H"],
     },
+  },
+  {
+    id: "3D建筑模型",
+    label: "3D建筑模型",
+    // to: "/userManage",
+    icon: "i-simple-icons-googlehome",
+    tooltip: {
+      text: "3D建筑模型",
+    },
+    click: goto3DModel,
   },
   {
     id: "wind",

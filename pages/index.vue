@@ -32,7 +32,8 @@ const modules = reactive([
   {
     title: "3D建筑模型",
     description: "用于查看3D建筑模型，可视化反映建筑问题",
-    to: "https://github.com/nuxt-modules/tailwindcss",
+    // to: "http://localhost:5173",
+    target_address: "http://localhost:5173",
     icon: "i-simple-icons-googlehome",
     permissionKey: "access_system_a",
   },
