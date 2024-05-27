@@ -163,6 +163,15 @@ const links = reactive([
     ]
   },
   {
+    id: "explosion",
+    label: "玻璃内爆检测",
+    to: "/explosion",
+    icon: "i-heroicons-fire",
+    tooltip: {
+      text: "玻璃内爆检测",
+    },
+  },
+  {
     id: "userInfo",
     label: "个人信息",
     to: "/userInfo",
