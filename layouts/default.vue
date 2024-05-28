@@ -147,7 +147,7 @@ const links = reactive([
   {
     id: "segment",
     label: "幕墙材质分割",
-    icon: "i-heroicons-building-office",
+    icon: "i-simple-icons-homeassistantcommunitystore",
     to: "/segment",
     defaultOpen: true,
     children: [
@@ -166,7 +166,7 @@ const links = reactive([
     id: "explosion",
     label: "玻璃内爆检测",
     to: "/explosion",
-    icon: "i-heroicons-fire",
+    icon: "i-material-symbols-sound-detection-glass-break-sharp",
     tooltip: {
       text: "玻璃内爆检测",
     },

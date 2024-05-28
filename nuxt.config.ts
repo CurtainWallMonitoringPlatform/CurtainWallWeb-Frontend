@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   //   '~/plugins/cleanup.js'
   // ],
   ui: {
-    icons: ['heroicons', 'simple-icons'],
+    icons: ['heroicons', 'simple-icons','material-symbols'],
     safelistColors: ['primary', 'red', 'orange', 'green']
   },
   devtools: { enabled: true },

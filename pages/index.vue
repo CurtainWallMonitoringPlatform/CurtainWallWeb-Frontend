@@ -38,14 +38,14 @@ const modules = reactive([
     permissionKey: "access_system_a",
   },
   {
-    title: "石材污渍",
+    title: "石材污渍检测",
     description: "用于识别建筑石材幕墙表面污渍",
     to: "https://github.com/nuxt-modules/tailwindcss",
-    icon: "i-simple-icons-anchor",
+    icon: "i-heroicons-fire",
     permissionKey: "access_system_b",
   },
   {
-    title: "石材裂缝",
+    title: "石材裂缝检测",
     description: "用于识别建筑石材幕墙表面裂缝",
     to: "https://github.com/nuxt-modules/tailwindcss",
     permissionKey: "access_system_c",
@@ -57,7 +57,7 @@ const modules = reactive([
     target_address: "/explosion",
     // to: "https://github.com/nuxt-community/eslint-module",
     permissionKey: "access_system_d",
-    icon: "i-heroicons-fire",
+    icon: "i-material-symbols-sound-detection-glass-break-sharp",
   },
   {
     title: "风振数据检测",
@@ -76,8 +76,8 @@ const modules = reactive([
     icon: "i-simple-icons-homeassistantcommunitystore",
   },
   {
-    title: "玻璃平整度",
-    description: "给定一张建筑玻璃图片，输出其平整度",
+    title: "玻璃平整度检测",
+    description: "给定一张建筑玻璃图片，检测其平整度",
     to: "https://github.com/vueuse/vueuse",
     permissionKey: "access_system_g",
     icon: "i-simple-icons-edgeimpulse",
