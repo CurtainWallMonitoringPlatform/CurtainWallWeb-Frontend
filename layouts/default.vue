@@ -149,7 +149,7 @@ const links = reactive([
     label: "幕墙材质分割",
     icon: "i-heroicons-building-office",
     to: "/segment",
-    defaultOpen: false,
+    defaultOpen: true,
     children: [
       {
         label: "幕墙分割识别",
