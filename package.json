@@ -33,7 +33,8 @@
     "vue": "^3.4.21",
     "vue-composable": "^1.0.0-beta.24",
     "vue-router": "^4.3.0",
-    "vuex": "^4.1.0"
+    "vuex": "^4.1.0",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.9",

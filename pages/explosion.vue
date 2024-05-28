@@ -41,7 +41,7 @@ import { ref, watch } from 'vue'
 import axios from 'axios'
 import Message from "@/server/segment/Message.js";
 import ImgUploader from '@/components/ImgUploader.vue'
-import { UploadImg } from '@/server/api/public.js'
+import { UploadImg } from '@/api/segment/public.js'
 import { useStore } from 'vuex'
 
 
@@ -57,7 +57,7 @@ const serverURL = 'http://111.231.168.12:8021'
 
 const fetchImage = async () => {
     try {
-        const response = await axios.get(serverURL + '/images', {
+        const response = await axios.get('http://111.231.168.12:8021/images', {
             responseType: 'arraybuffer',
         });
         const imageBlob = new Blob([response.data], { type: 'image/jpeg' });
@@ -71,8 +71,7 @@ const fetchImage = async () => {
 
 const saveImage = async () => {
     try {
-
-        const response = await axios.get(serverURL + '/save')
+        const response = await axios.get('http://111.231.168.12:8021/save')
         // 处理后端返回的数据
         console.log(response.data);
         Message.success("保存成功");
@@ -86,7 +85,7 @@ const saveImage = async () => {
 const images = ref([]);
 
 // 获取后端返回的结果图片
-fetch(serverURL + '/api/images/display5')
+fetch('http://111.231.168.12:8021/api/images/display5')
     .then(response => response.json())
     .then(imageBase64List => {
         images.value = imageBase64List.map(base64Image => 'data:image/jpeg;base64,' + base64Image);
@@ -94,17 +93,16 @@ fetch(serverURL + '/api/images/display5')
     .catch(error => console.error('Error fetching images:', error));
 
 const upload = (val) => {
-    console.log(val.fileList[0].raw) //图片raw文件
+    console.log(val.fileList[0].raw) // 图片raw文件
 
     let formData = new FormData();
     formData.append('photo', val.fileList[0].raw);
 
     UploadImg(formData)
-
+    console.log(store.state.process_status)
     watch(() => store.state.process_status, (newStatus, oldStatus) => {
         fetchImage();
     });
-
 }
 
 const after_upload = (result) => {
