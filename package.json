@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.9",
-    "@iconify-json/material-symbols": "^1.1.79",
+    "@iconify-json/material-symbols": "^1.1.80",
     "@iconify/vue": "^4.1.2",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@popperjs/core": "npm:@sxzz/popperjs-es@^2.11.8"
