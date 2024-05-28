@@ -4,7 +4,7 @@ import store from "@/store/index.js"
 
 // 图像上传内部接口
 //！！接口与后端对应，如需使用请对接口地址等信息做更改（同时更改utils下的Request.js）
-export function UploadImg(FormData) { 
+export function UploadImg(FormData, successCallback, errorCallback) { 
     return Request({  // 发送请求
         method: 'POST',
         headers: {
@@ -17,10 +17,11 @@ export function UploadImg(FormData) {
         if (response.data === "successfully") {
             console.log("respons数据");
             console.log(response);
-            Beginyolo();
+            Beginyolo(successCallback);
             Message.success("上传成功");  // 正确响应，返回数据
         } else {
             Message.success("上传失败");
+            errorCallback();
         }
     }).catch(function (error) {  // catch 表示接收到错误响应后的操作
         console.log(error);
@@ -28,7 +29,7 @@ export function UploadImg(FormData) {
 }
 
 // 调用yolov8内部接口
-export function Beginyolo(){
+export function Beginyolo(successCallback){
     return Request({  // 发送请求
         method: 'GET',
         url: '/yolo',  // 与后端接口对应！！！
@@ -37,6 +38,7 @@ export function Beginyolo(){
             Message.success("识别成功");
             store.state.process_status = !store.state.process_status;
             console.log(response.data); // 检查返回的数据
+            successCallback();
             //return response;  
         } else {
             Message.success("识别失败");

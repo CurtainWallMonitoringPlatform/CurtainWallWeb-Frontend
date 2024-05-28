@@ -15,19 +15,20 @@
                     点击查看用户图片
                 </div>
                 <el-image :src="images[0]" :preview-src-list="images"
-                    style="width: 200px; height: 150px; margin-top:10px; object-fit:contain">
+                    style="width: 100%; margin-top:5%; object-fit:contain; display: flex;">
                 </el-image>
             </div>
 
             <!-- 上传图片end -->
-            <div>
+            <div class="result-wrap">
                 <el-divider style="margin-top:60px;width: 68%; left: 28% " content-position="center">
                     识别结果
                 </el-divider>
                 <el-scrollbar class="scrollbar-container">
                     <img v-if="imageUrl" :src="imageUrl" alt="Annotated Image"
-                        :style="{ 'max-width': '100%', 'max-height': '100%' }" />
-                    <el-button v-if="imageUrl" type="primary" @click="saveImage">
+                        :style="{ 'margin-left': '20%', 'width': '60%', 'max-height': '100%' }" />
+                    <el-button v-if="imageUrl" type="primary" @click="saveImage"
+                        style="margin-left: 20%; width: 60%; margin-top: 2%">
                         保存图片
                     </el-button>
                 </el-scrollbar>
@@ -69,6 +70,9 @@ const fetchImage = async () => {
     }
 };
 
+const errorCallBack = async () => {
+};
+
 const saveImage = async () => {
     try {
         const response = await axios.get('http://111.231.168.12:8021/save')
@@ -98,11 +102,11 @@ const upload = (val) => {
     let formData = new FormData();
     formData.append('photo', val.fileList[0].raw);
 
-    UploadImg(formData)
-    console.log(store.state.process_status)
-    watch(() => store.state.process_status, (newStatus, oldStatus) => {
-        fetchImage();
-    });
+    UploadImg(formData, fetchImage, errorCallBack)
+
+    // watch(() => store.state.process_status, (newStatus, oldStatus) => {
+    //     fetchImage();
+    // });
 }
 
 const after_upload = (result) => {
@@ -133,5 +137,7 @@ const after_upload = (result) => {
     text-align: left;
     border: 1px solid black;
     border-radius: 1%;
+    display: flex;
+    flex-direction: column;
 }
 </style>
