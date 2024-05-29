@@ -32,7 +32,7 @@ import { sub } from 'date-fns';
 
     onMounted(()=>{
         // 获取当前日期
-        const initialTime = ref({ start: sub(new Date(), { days: 30 }), end: new Date() })
+        const initialTime = ref({ start: sub(new Date(), { days: 7 }), end: new Date() })
         // 获取时间戳
         requestParams.startTime = initialTime.value.start.getTime().toString();
         requestParams.endTime = initialTime.value.end.getTime().toString();
