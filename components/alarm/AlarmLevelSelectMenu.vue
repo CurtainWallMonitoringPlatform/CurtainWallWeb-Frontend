@@ -14,13 +14,18 @@
     const emit = defineEmits(['selectLevel']);
 
     // 使用初始空数组并指定类型
-    let levelList = ref(['全部','高','中','低']);
+    let levelList = ref(['全部','高风险','中风险','低风险']);
 
     //选中的等级
     const selectedLevel = ref('');
 
     watch(selectedLevel, (newValue) => {
-        emit('selectLevel', newValue);
+        if(newValue == '全部'){
+            emit('selectLevel', '');
+        }
+        else{
+            emit('selectLevel', newValue);
+        }
     });
 
 </script>

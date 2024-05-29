@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { defineEventHandler } from 'h3';
 
-const BASE_URL = 'https://mock.apifox.com/m1/2979997-2544395-default/api/warn';
+const BASE_URL = 'http://47.120.50.113:8090/api/monitor';
 
 export default defineEventHandler(async (event: any) => {
   try {
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event: any) => {
 
 
     // 发起GET请求
-    const response = await axios.get(`${BASE_URL}/records`, { params: query });
+    const response = await axios.get(`${BASE_URL}/warning`, { params: query });
     console.log('server',response);
 
     // 检查响应状态码

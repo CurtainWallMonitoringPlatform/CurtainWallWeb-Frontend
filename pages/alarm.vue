@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { sub } from 'date-fns';
 
     //所有记录数
     const total = ref(0);
+    const size = ref(10);
 
     interface RequestParam {
         deviceId: string;
@@ -21,16 +23,19 @@ import { ref, onMounted } from 'vue'
         endTime: '',
         level: '',
         pageNo: 1,
-        pageSize: 20,
+        pageSize: size.value,
     });
 
 
     //响应参数
     let records = ref(null);
 
-    let isloading: any;
-
     onMounted(()=>{
+        // 获取当前日期
+        const initialTime = ref({ start: sub(new Date(), { days: 30 }), end: new Date() })
+        // 获取时间戳
+        requestParams.startTime = initialTime.value.start.getTime().toString();
+        requestParams.endTime = initialTime.value.end.getTime().toString();
         getAlarmRecords(requestParams);
     })
 
@@ -39,23 +44,24 @@ import { ref, onMounted } from 'vue'
         records.value = null; // 重置响应数据
         try {
             
-            const {data: result, isloading} = await useFetch('https://mock.apifox.com/m1/2979997-2544395-default/api/warn/records/', {
-            method: 'GET',
-            query: requestParams,
+            const {data: result } = await useFetch('/api/monitor/warning', {
+                method: 'GET',
+                query: requestParams,
             });
-            console.log(result.value);
-
             if(result.value && result.value.data){
                 records.value = result.value.data.records;
-                total.value = result.value.total;
+                total.value = result.value.data.total;
+                if(records.value != null){
+                    for(let i = 0; i < records.value.length; i++){
+                        records.value[i].emails = records.value[i].emails.split(',').join('\n')
+                    }
+                }
 
-                console.log(records.value);
+                console.log(result.value);
             }
             else{
                 console.log('erorrrrrrrrrr')
             }
-
-
         } catch (error) {
             console.error('Error fetching alarm records:', error);
         }
@@ -66,6 +72,7 @@ import { ref, onMounted } from 'vue'
     //选择设备
     const handleSelectDevice = (val: any) => {
       requestParams.deviceId = val.deviceId;
+      requestParams.pageNo = 1;
       getAlarmRecords(requestParams);
     }
     
@@ -73,12 +80,14 @@ import { ref, onMounted } from 'vue'
     const handleSelectRange = (val: any) => {
         requestParams.startTime = val.start_time;
         requestParams.endTime = val.end_time;
+        requestParams.pageNo = 1;
         getAlarmRecords(requestParams);
     }
 
     //选择报警等级
     const handleSelectLevel = (val: any) => {
         requestParams.level = val;
+        requestParams.pageNo = 1;
         getAlarmRecords(requestParams);
     }
 
@@ -113,7 +122,8 @@ import { ref, onMounted } from 'vue'
             :page-count="requestParams.pageSize" 
             :total="total" 
             @click="handleSelectPage"
-            show-last show-first/>
+            show-last show-first>
+        </UPagination>
         
         <UContainer v-if="records == null">
             暂无结果

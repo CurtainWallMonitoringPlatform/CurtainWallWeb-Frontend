@@ -1,21 +1,25 @@
 <template>
-    <UTable
-        :rows="records"
-        :columns="columns"
-        class="w-full"
-        :ui="{ divide: 'divide-gray-200 dark:divide-gray-800' }"
-      >
+  <UTable
+    :rows="records"
+    :columns="columns"
+    class="w-full"
+    :ui="{ divide: 'divide-gray-200 dark:divide-gray-800' }"
+  >
+    <template #level-data="{ row, column }">
+      <UBadge
+        v-if="column.key === 'level'"
+        :label="row.level"
+        :color="row.level === '低风险' ? 'green' : row.level === '中风险' ? 'orange' : 'red'"
+        variant="subtle"
+        class="capitalize"
+      />
+    </template>
 
-        <template #level-data="{ row }">
-          <UBadge
-            :label="row.level"
-            :color="row.level === '低' ? 'green' : row.level === '中' ? 'orange' : 'red'"
-            variant="subtle"
-            class="capitalize"
-          />
-        </template>
-    </UTable>
+    <template #emails-data="{ row }">
+      <div class="whitespace-pre-line">{{ row.emails }}</div>
+    </template>
 
+  </UTable>
 </template>
 
 
@@ -28,7 +32,7 @@
     const columns = [
     {
     key: 'recordId',
-    label: '记录编号',
+    label: 'ID',
     }, 
     {
     key: 'pushTime',
@@ -56,7 +60,11 @@
     key: 'offset',
     label: '设备偏移量'
     }, 
+    {
+      key: 'emails',
+      label: '接收邮箱',
+    },
     ]
 
-
 </script>
+
