@@ -24,7 +24,11 @@
                 <el-divider style="margin-top:60px;width: 68%; left: 28% " content-position="center">
                     识别结果
                 </el-divider>
+
                 <el-scrollbar class="scrollbar-container">
+                    <div class="progress-wrap" v-if="showProgress">
+                        <UProgress animation="carousel"></UProgress>
+                    </div>
                     <img v-if="imageUrl" :src="imageUrl" alt="Annotated Image"
                         :style="{ 'margin-left': '20%', 'width': '60%', 'max-height': '100%' }" />
                     <el-button v-if="imageUrl" type="primary" @click="saveImage"
@@ -56,6 +60,8 @@ const store = useStore()
 
 const serverURL = 'http://111.231.168.12:8021'
 
+const showProgress = ref(false);
+
 const fetchImage = async () => {
     try {
         const response = await axios.get('http://111.231.168.12:8021/images', {
@@ -63,6 +69,7 @@ const fetchImage = async () => {
         });
         const imageBlob = new Blob([response.data], { type: 'image/jpeg' });
         imageUrl.value = URL.createObjectURL(imageBlob);
+        showProgress.value = false;
         console.log("display数据");
         console.log(response.data);
     } catch (error) {
@@ -102,6 +109,8 @@ const upload = (val) => {
     let formData = new FormData();
     formData.append('photo', val.fileList[0].raw);
 
+    showProgress.value = true;
+
     UploadImg(formData, fetchImage, errorCallBack)
 
     // watch(() => store.state.process_status, (newStatus, oldStatus) => {
@@ -139,5 +148,9 @@ const after_upload = (result) => {
     border-radius: 1%;
     display: flex;
     flex-direction: column;
+}
+
+.progress-wrap {
+    width: 100%;
 }
 </style>
