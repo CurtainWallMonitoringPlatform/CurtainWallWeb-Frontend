@@ -12,6 +12,7 @@ const _useDashboard = () => {
     'g-m': () => router.push('/monitor'),
     'g-e': () => router.push('/equipments'),
     'g-s': () => router.push('/settings'),
+    'g-w': () => router.push('/alarm'),
     '?': () => isHelpSlideoverOpen.value = true,
     n: () => isNotificationsSlideoverOpen.value = true
   })

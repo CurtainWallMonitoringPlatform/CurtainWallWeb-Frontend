@@ -10,7 +10,7 @@
     </template>
   </UDashboardToolbar>
 
-  <LargeDataChart :chartData="response" :direction="direction" v-if="response != null"></LargeDataChart>
+  <MonitorLargeDataChart :chartData="response" :direction="direction" v-if="response != null"></MonitorLargeDataChart>
   <div class="flex items-center justify-center h-screen" v-if="response == null">
     <USkeleton class="w-4/5 h-4/5" />
   </div>

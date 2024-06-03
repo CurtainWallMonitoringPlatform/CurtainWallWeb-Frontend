@@ -118,6 +118,16 @@ const links = reactive([
         },
       },
       {
+        id: "alarm",
+        label: "报警中心",
+        icon: "i-heroicons-exclamation-triangle",
+        to: "/alarm",
+        tooltip: {
+          text: "报警中心",
+          shortcuts: ["G", "W"],
+        },
+      },
+      {
         id: "settings",
         label: "设置",
         to: "/settings",
@@ -159,8 +169,8 @@ const links = reactive([
       {
         label: "查看历史记录",
         to: "/segment/history",
-      }
-    ]
+      },
+    ],
   },
   {
     id: "explosion",
@@ -256,7 +266,7 @@ getUserAuth();
 
 onMounted(() => {
   getUserAuth();
-})
+});
 
 const footerLinks = [
   {
@@ -311,7 +321,11 @@ const colors = computed(() =>
 
 <template>
   <UDashboardLayout>
-    <UDashboardPanel :width="250" :resizable="{ min: 200, max: 300 }" collapsible>
+    <UDashboardPanel
+      :width="250"
+      :resizable="{ min: 200, max: 300 }"
+      collapsible
+    >
       <UDashboardNavbar class="!border-transparent" :ui="{ left: 'flex-1' }">
         <template #left>
           <WebInfo />
