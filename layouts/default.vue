@@ -54,6 +54,13 @@ const goto3DModel = () => {
   window.location.href = "http://localhost:5173";
 };
 
+const gotoGlassFlatness = () => {
+  // router.push("http://localhost:5173")
+  // window.open("http://localhost:5173", "_blank");
+  window.location.href = "http://localhost:8080";
+};
+
+
 const links = reactive([
   {
     id: "home",
@@ -182,6 +189,16 @@ const links = reactive([
     },
   },
   {
+    id: "glassFlatness",
+    label: "玻璃平整度检测",
+    // to: "/explosion",
+    icon: "i-simple-icons-edgeimpulse",
+    click: gotoGlassFlatness,
+    tooltip: {
+      text: "玻璃内爆检测",
+    },
+  },
+  {
     id: "userInfo",
     label: "个人信息",
     to: "/userInfo",
@@ -253,6 +270,9 @@ const getUserAuth = async () => {
     }
     if (!userAuth.value.access_system_f) {
       removeLinkById("segment");
+    }
+    if (!userAuth.value.access_system_g) {
+      removeLinkById("glassFlatness");
     }
     if (!userAuth.value.is_superuser) {
       removeLinkById("userManage");

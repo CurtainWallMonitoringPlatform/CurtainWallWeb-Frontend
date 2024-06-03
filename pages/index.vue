@@ -78,7 +78,8 @@ const modules = reactive([
   {
     title: "玻璃平整度检测",
     description: "给定一张建筑玻璃图片，检测其平整度",
-    to: "https://github.com/vueuse/vueuse",
+    // to: "https://github.com/vueuse/vueuse",
+    target_address: "http://localhost:8080",
     permissionKey: "access_system_g",
     icon: "i-simple-icons-edgeimpulse",
   },
@@ -86,7 +87,7 @@ const modules = reactive([
 
 const checkPermissionAndRedirect = (module) => {
   if (userAuth.value.is_superuser || userAuth.value[module.permissionKey]) {
-    if (module.title === "3D建筑模型") {
+    if (module.title === "3D建筑模型" || module.title === "玻璃平整度检测") {
       window.location.href = module.target_address; // 使用window.location.href进行跳转
     } else {
       router.push({ path: module.target_address }); // 使用router.push进行跳转
