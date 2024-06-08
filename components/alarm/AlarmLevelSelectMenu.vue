@@ -14,7 +14,7 @@
     const emit = defineEmits(['selectLevel']);
 
     // 使用初始空数组并指定类型
-    let levelList = ref(['全部','高风险','中风险','低风险']);
+    let levelList = ref(['全部','高风险','中风险','低风险','空数据']);
 
     //选中的等级
     const selectedLevel = ref('');
