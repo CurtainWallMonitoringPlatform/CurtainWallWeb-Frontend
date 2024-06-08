@@ -51,14 +51,8 @@
     
     onMounted(()=>{
       // 获取当前日期
-      // 获取当天0点的时间戳
-      // requestParams.value.endTime = Math.floor(Date.now());
-      // requestParams.value.startTime = requestParams.value.endTime - 24 * 60 * 60 * 7
-      // console.log(requestParams.value)
       const initialTime = ref({ start: sub(new Date(), { days: 7 }), end: new Date() })
-      // 设置为指定日期的时间
-      initialTime.value.start.setHours(0, 0, 0, 0);
-      initialTime.value.end.setHours(0, 0, 0, 0);
+      console.log(initialTime.value.end)
       // 获取时间戳
       requestParams.startTime = initialTime.value.start.getTime();
       requestParams.endTime = initialTime.value.end.getTime();
