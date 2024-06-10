@@ -1,7 +1,7 @@
 <!-- 图像分割页面 -->
 <template>
   <div class="main-page">
-    <!-- <el-button @click="GoToDash">进入仪表盘</el-button> -->
+    <el-button type="primary" class="back-to-main-btn" @click="backToMain">返回主页</el-button>
     <div class="container">
       <ImgUploader
         ref="ImgUploadRef"
@@ -43,6 +43,7 @@
 // import { ref }from 'vue'
 import ImgList from "@/components/segment/ResultContainer.vue";
 import ImgUploader from "@/components/segment/ImgUploader_batch.vue";
+import { useRouter } from "vue-router";
 import {
   UploadBatchImg,
   SegSingleImg,
@@ -65,6 +66,7 @@ var isGlassWall = ref(true); // 是否为玻璃幕墙
 
 const imageWidth = ref(0);
 const imageHeight = ref(0);
+const router = useRouter();
 
 // 跳转仪表盘页面
 const GoToDash = () => {
@@ -74,6 +76,10 @@ const GoToDash = () => {
       choice: "dashboard",
     },
   });
+};
+
+const backToMain = () => {
+  router.push("/");
 };
 
 // 批量上传图片
@@ -202,6 +208,11 @@ const handleSwitchChange = (newValue) => {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.back-to-main-btn {
+  margin: 20px;
+  align-self: flex-start; /* 对齐到容器的左侧 */
 }
 
 .upload-container {

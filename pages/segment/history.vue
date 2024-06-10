@@ -1,5 +1,6 @@
 <template>
     <div class="history-wrap">
+        <el-button type="primary" class="back-to-main-btn" @click="backToMain">返回主页</el-button>
         <div class="datepicker-wrap">
             <div class="block">
                 <el-date-picker v-model="pickedDate" type="date" placeholder="请选择日期" />
@@ -37,6 +38,7 @@
 <script setup>
 // import { ref, watch }from 'vue'
 import { GetResultByDate } from '@/api/segment/segmentation.js'
+import { useRouter } from "vue-router";
 
 const pickedDate = ref('')
 var selectedImage = ref(null)
@@ -47,6 +49,12 @@ function showImageDetails(image) {
     selectedImage.value = image;
     dialogVisible.value = true;
 }
+
+const router = useRouter();
+const backToMain = () => {
+  router.push("/");
+};
+
 
 // 改变图片尺寸，用于生成缩略图
 function resizeImage(imageSrc, width, height) {
@@ -102,6 +110,11 @@ watch(pickedDate, async (newDate) => {
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
+}
+
+.back-to-main-btn {
+  margin: 20px;
+  align-self: flex-start; /* 对齐到容器的左侧 */
 }
 
 .result-wrap {

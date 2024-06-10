@@ -1,5 +1,6 @@
 <!-- 玻璃内爆识别页面 -->
 <template>
+    <el-button type="primary" class="back-to-main-btn" @click="backToMain">返回主页</el-button>
     <UDashboardPage>
         <UDashboardPanel grow>
             <!-- 上传图片begin -->
@@ -48,7 +49,12 @@ import Message from "@/server/segment/Message.js";
 import ImgUploader from '@/components/ImgUploader.vue'
 import { UploadImg } from '@/api/segment/public.js'
 import { useStore } from 'vuex'
+import { useRouter } from "vue-router";
 
+const router = useRouter();
+const backToMain = () => {
+  router.push("/");
+};
 
 //上传的图片
 const ImgUploadRef = ref(null);
@@ -124,6 +130,11 @@ const after_upload = (result) => {
 </script>
 
 <style scoped>
+.back-to-main-btn {
+  margin: 5px;
+  align-self: flex-start; /* 对齐到容器的左侧 */
+}
+
 .page {
     display: flex;
     flex-direction: column;
