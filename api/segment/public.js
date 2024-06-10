@@ -6,6 +6,7 @@ import store from "@/store/index.js"
 //！！接口与后端对应，如需使用请对接口地址等信息做更改（同时更改utils下的Request.js）
 export function UploadImg(FormData, successCallback, errorCallback) { 
     return Request({  // 发送请求
+        baseURL: "http://111.231.168.12:8021",
         method: 'POST',
         headers: {
             'Content-Type': 'application/form-data', // 设置请求头
@@ -31,6 +32,7 @@ export function UploadImg(FormData, successCallback, errorCallback) {
 // 调用yolov8内部接口
 export function Beginyolo(successCallback){
     return Request({  // 发送请求
+        baseURL: "http://111.231.168.12:8021",
         method: 'GET',
         url: '/yolo',  // 与后端接口对应！！！
     }).then(function (response) {  // then 表示成功接收到响应后的操作
