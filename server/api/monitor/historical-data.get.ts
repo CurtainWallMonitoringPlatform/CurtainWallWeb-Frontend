@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { defineEventHandler } from 'h3';
 
-const BASE_URL = 'http://47.120.50.113:8090/api/monitor';
+const BASE_URL = 'http://111.231.168.12:8180/api/monitor';
 
 export default defineEventHandler(async (event: any) => {
   try {

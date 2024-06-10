@@ -5,7 +5,7 @@
             searchable
             v-model="selectedDevice"
             :options="devices"
-            option-attribute="label"
+            option-attribute="deviceId"
             placeholder="select device"
           >
             <template #label>
@@ -16,7 +16,7 @@
                 ]"
                 aria-hidden="true"
               />
-              <span class="truncate">{{ selectedDevice.label }}</span>
+              <span class="truncate">{{ selectedDevice.deviceName }}</span>
             </template>
   
             <template #option="{ option: device }">
@@ -27,7 +27,7 @@
                 ]"
                 aria-hidden="true"
               />
-              <span class="truncate">{{ device.label }}</span>
+              <span class="truncate">{{ device.deviceName }}</span>
             </template>
           </USelectMenu>
         </template>
@@ -43,12 +43,41 @@
     import { onMounted, ref, watch } from 'vue';
     import * as echarts from 'echarts';
 
+
     const devices = ref();
     const selectedDevice = ref({
-        label: '9A0D1958',
-        disabled: false,
-        online: true,
+        deviceId: 'A77C5238',
+        deviceName: 'A楼01',
+        disabled: true,
+        online: false,
     });
+
+    //获取设备信息
+    interface Device {
+        deviceName: string;
+        deviceId: string;
+        offset: number | string; // 这里我假设 offset 是一个数字，如果是字符串请保留您原来的类型
+        lowerOuliter: number | string;
+        higherOuliter: number | string;
+    }
+
+    // 使用初始空数组并指定类型
+    let deviceList = ref<Device[]>([]);
+
+    const fetchDeviceList = async () => {
+    try {
+        const response = await useFetch('/api/device/all');
+        deviceList.value = response.data.value as unknown as Device[];
+        console.log(deviceList.value);
+    } catch (error) {
+        console.error('Error getting device list:', error);
+    }
+    };
+
+    onMounted(() =>{
+        fetchDeviceList();
+        console.log(deviceList.value);
+    })
 
     let timeChart: any;
     let amplitudeChart: any;
@@ -73,6 +102,10 @@
 
     //绘制时程曲线
     const drawTimeChart = (chartData: any) =>{
+        const deviceInfo = deviceList.value.find((d) => d.deviceId === chartData.device);
+            if (deviceInfo) {
+                chartData.deviceName = deviceInfo.deviceName;
+        }
         var option: EChartsOption;
 
         //计算x轴
@@ -137,7 +170,7 @@
         }
         option = {
             title: {
-                text: `时程曲线：设备${chartData.device}`,
+                text: `时程曲线：${chartData.deviceName}（设备${chartData.device}）`,
             },
             tooltip: {
                 trigger: 'axis'
@@ -177,6 +210,10 @@
 
     //绘制幅频曲线
     const drawAmplitudeChart = (data: any) =>{
+        const deviceInfo = deviceList.value.find((d) => d.deviceId === data.device);
+            if (deviceInfo) {
+                data.deviceName = deviceInfo.deviceName;
+        }
         var option2: EChartsOption;
 
         //计算x轴
@@ -206,7 +243,7 @@
 
         option2 = {
             title: {
-                text: `频幅曲线：设备${data.device}`,
+                text: `频幅曲线：${data.deviceName}（设备${data.device}）`,
             },
             tooltip: {
                 trigger: 'axis'
@@ -243,20 +280,20 @@
     //WebSocket
     const websocketUrl = 'wss://digetech.cn:8771/websocket/user_58';
     let socket1 = new WebSocket(websocketUrl);
+    let first_flag = true;
 
     //socket请求参数1：获取设备实时状态
     const request1 = {
         code: 2,
         data: [
-        '4787BE3A', '8850A7D7', '8361D7CD', '612B04ED', 'E884C99D',
-        'E43AC643', '29FA1867', '87C3D4E4', '9A0D1958', 'F853ED49', 'A77C5238'
+        'A77C5238', 'F853ED49', '9A0D1958', '87C3D4E4', '29FA1867','E43AC643'
         ],
         key: 'qiushangzhou852'
     };
     //socket请求参数2：获取设备详细数据
     let request2 = {
         code: 1,
-        data: selectedDevice.value.label,
+        data: selectedDevice.value.deviceId,
         channel: '0',
         pam: 1,
         key: 'qiushangzhou852'
@@ -285,10 +322,26 @@
             else if(message.message == '设备状态'){
                 // console.log(message.data);
                 devices.value = Object.entries(message.data).map(([key, value]) => ({
-                    label: key,
+                    deviceId: key,
                     disabled: value === 1 ? false : true,
                     online: value === 1 ? true : false
                 }))
+                devices.value.forEach((device: { deviceId: string; deviceName: string; }) => {
+                    // 假设 deviceList 已经填充了设备名
+                    const deviceInfo = deviceList.value.find((d) => d.deviceId === device.deviceId);
+                    if (deviceInfo) {
+                        device.deviceName = deviceInfo.deviceName;
+                    }
+                });
+                const onlineDevice = devices.value.find((device: { online: boolean; }) => device.online === true);
+                if(first_flag) {
+                    selectedDevice.value.deviceId = onlineDevice.deviceId;
+                    selectedDevice.value.deviceName = onlineDevice.deviceName;
+                    selectedDevice.value.disabled = false;
+                    selectedDevice.value.online = true;
+                }
+                first_flag = false;
+
             }
 
         }
@@ -306,7 +359,7 @@
 
 
     watch(selectedDevice, (newValue) => {
-        request2.data = newValue.label;
+        request2.data = newValue.deviceId;
         socket1.close();
         socket1 = new WebSocket(websocketUrl);
         socket1.onopen = () => {
@@ -330,10 +383,22 @@
                 else if(message.message == '设备状态'){
                     // console.log(message.data);
                     devices.value = Object.entries(message.data).map(([key, value]) => ({
-                        label: key,
+                        deviceId: key,
                         disabled: value === 1 ? false : true,
                         online: value === 1 ? true : false
                     }))
+                    devices.value.forEach((device: { deviceId: string; deviceName: string; }) => {
+                        // 假设 deviceList 已经填充了设备名
+                        const deviceInfo = deviceList.value.find((d) => d.deviceId === device.deviceId);
+                        if (deviceInfo) {
+                            device.deviceName = deviceInfo.deviceName;
+                        }
+                    });
+                    const onlineDevice = devices.value.find((device: { online: boolean; }) => device.online === true);
+                    if(selectedDevice.value.disabled){
+                        selectedDevice.value.deviceId = onlineDevice.deviceId;
+                        selectedDevice.value.deviceName = onlineDevice.deviceName;
+                    }
                 }
 
             }

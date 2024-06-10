@@ -9,7 +9,7 @@
       <UBadge
         v-if="column.key === 'level'"
         :label="row.level"
-        :color="row.level === '低风险' ? 'green' : row.level === '中风险' ? 'orange' : 'red'"
+        :color="row.level === '低风险' ? 'green' : row.level === '中风险' ? 'orange' : row.level === '高风险' ? 'red' : 'sky'"
         variant="subtle"
         class="capitalize"
       />
@@ -40,7 +40,7 @@
     },
     {
     key: 'level',
-    label: '报警等级',
+    label: '等级',
     },
     {
     key: 'deviceName',
@@ -50,15 +50,15 @@
     label: '设备编号',
     }, {
     key: 'lowerOutlier',
-    label: '设备阈值下限'
+    label: '阈值下限'
     }, 
     {
     key: 'upperOutlier',
-    label: '设备阈值上限'
+    label: '阈值上限'
     }, 
     {
     key: 'offset',
-    label: '设备偏移量'
+    label: '偏移量'
     }, 
     {
       key: 'emails',
