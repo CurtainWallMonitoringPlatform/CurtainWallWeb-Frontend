@@ -64,7 +64,7 @@ const showProgress = ref(false);
 
 const fetchImage = async () => {
     try {
-        const response = await axios.get('http://111.231.168.12:8021/images', {
+        const response = await axios.get(serverURL + '/images', {
             responseType: 'arraybuffer',
         });
         const imageBlob = new Blob([response.data], { type: 'image/jpeg' });
@@ -82,7 +82,7 @@ const errorCallBack = async () => {
 
 const saveImage = async () => {
     try {
-        const response = await axios.get('http://111.231.168.12:8021/save')
+        const response = await axios.get(serverURL + '/save')
         // 处理后端返回的数据
         console.log(response.data);
         Message.success("保存成功");
@@ -96,7 +96,7 @@ const saveImage = async () => {
 const images = ref([]);
 
 // 获取后端返回的结果图片
-fetch('http://111.231.168.12:8021/api/images/display5')
+fetch(serverURL + '/api/images/display5')
     .then(response => response.json())
     .then(imageBase64List => {
         images.value = imageBase64List.map(base64Image => 'data:image/jpeg;base64,' + base64Image);
