@@ -52,8 +52,8 @@ const modules = reactive([
     icon: "i-simple-icons-affinitypublisher",
   },
   {
-    title: "玻璃内爆检测",
-    description: "通过图片检测玻璃内爆风险",
+    title: "玻璃自爆检测",
+    description: "通过图片检测玻璃自爆风险",
     target_address: "/explosion",
     // to: "https://github.com/nuxt-community/eslint-module",
     permissionKey: "access_system_d",
@@ -127,5 +127,10 @@ const checkPermissionAndRedirect = (module) => {
   background-color: #f0f0f0;
   cursor: pointer;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.back-to-main-btn {
+  margin: 5px;
+  align-self: flex-end; /* 对齐到容器的左侧 */
 }
 </style>

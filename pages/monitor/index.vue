@@ -1,4 +1,7 @@
 <template>
+    <div style="position: fixed; right: 10px; top: 15px; z-index: 1000;">
+        <el-button type="primary" @click="backToMain" style="position: absolute; right: 0; top: 0;">返回主页</el-button>
+    </div>
     <UDashboardToolbar>
         <template #left>
             <USelectMenu searchable v-model="selectedDevice" :options="devices" option-attribute="deviceId"
@@ -19,7 +22,6 @@
                     <span class="truncate">{{ device.deviceName }}</span>
                 </template>
             </USelectMenu>
-            <el-button type="primary" class="back-to-main-btn" @click="backToMain">返回主页</el-button>
         </template>
     </UDashboardToolbar>
 
@@ -36,7 +38,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const backToMain = () => {
-  router.push("/");
+    router.push("/");
 };
 
 

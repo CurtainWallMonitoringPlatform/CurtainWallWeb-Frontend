@@ -1,6 +1,9 @@
 <!-- 玻璃内爆识别页面 -->
 <template>
-    <el-button type="primary" class="back-to-main-btn" @click="backToMain">返回主页</el-button>
+    <div style="position: fixed; right: 10px; top: 10px; z-index: 1000;">
+        <el-button type="primary" class="back-to-main-btn" @click="backToMain"
+            style="position: absolute; right: 0; top: 0;">返回主页</el-button>
+    </div>
     <UDashboardPage>
         <UDashboardPanel grow>
             <!-- 上传图片begin -->
@@ -53,7 +56,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const backToMain = () => {
-  router.push("/");
+    router.push("/");
 };
 
 //上传的图片
@@ -130,10 +133,10 @@ const after_upload = (result) => {
 </script>
 
 <style scoped>
-.back-to-main-btn {
+/* .back-to-main-btn {
   margin: 5px;
-  align-self: flex-start; /* 对齐到容器的左侧 */
-}
+  align-self: flex-end; 
+} */
 
 .page {
     display: flex;

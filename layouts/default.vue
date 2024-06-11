@@ -181,11 +181,11 @@ const links = reactive([
   },
   {
     id: "explosion",
-    label: "玻璃内爆检测",
+    label: "玻璃自爆检测",
     to: "/explosion",
     icon: "i-material-symbols-sound-detection-glass-break-sharp",
     tooltip: {
-      text: "玻璃内爆检测",
+      text: "玻璃自爆检测",
     },
   },
   {
@@ -337,18 +337,19 @@ const colors = computed(() =>
     active: appConfig.ui.primary === color.label,
   }))
 );
+
+const backToMain = () => {
+  router.push("/");
+};
 </script>
 
 <template>
   <UDashboardLayout>
-    <UDashboardPanel
-      :width="250"
-      :resizable="{ min: 200, max: 300 }"
-      collapsible
-    >
+    <UDashboardPanel :width="250" :resizable="{ min: 200, max: 300 }" collapsible>
       <UDashboardNavbar class="!border-transparent" :ui="{ left: 'flex-1' }">
         <template #left>
           <WebInfo />
+          
         </template>
       </UDashboardNavbar>
 
@@ -390,4 +391,10 @@ const colors = computed(() =>
   </UDashboardLayout>
 </template>
 
-<style></style>
+<style>
+.back-to-main-btn {
+  margin: 5px;
+  align-self: flex-end;
+  /* 对齐到容器的左侧 */
+}
+</style>

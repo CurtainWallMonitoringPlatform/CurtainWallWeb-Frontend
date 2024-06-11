@@ -1,11 +1,13 @@
 <template>
+  <div style="position: fixed; right: 10px; top: 15px; z-index: 1000;">
+    <el-button type="primary" @click="backToMain" style="position: absolute; right: 0; top: 0;">返回主页</el-button>
+  </div>
   <UDashboardToolbar>
     <template #left>
       <!-- 设备选择 -->
       <DeviceSelectMenu @selectDevice="handleSelectDevice" />
       <!-- 时间选择 -->
       <DateRangePicker @selectRange="handleSelectRange"></DateRangePicker>
-      <el-button type="primary" class="back-to-main-btn" @click="backToMain">返回主页</el-button>
     </template>
   </UDashboardToolbar>
 
@@ -101,6 +103,7 @@ const handleSelectDevice = (val: any) => {
 
 .back-to-main-btn {
   margin: 0px;
-  align-self: flex-start; /* 对齐到容器的左侧 */
+  align-self: flex-start;
+  /* 对齐到容器的左侧 */
 }
 </style>

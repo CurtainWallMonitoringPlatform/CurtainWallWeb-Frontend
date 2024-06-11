@@ -1,6 +1,9 @@
 <template>
     <div class="history-wrap">
-        <el-button type="primary" class="back-to-main-btn" @click="backToMain">返回主页</el-button>
+        <div style="position: fixed; right: 10px; top: 10px; z-index: 1000;">
+            <el-button type="primary" class="back-to-main-btn" @click="backToMain"
+                style="position: absolute; right: 0; top: 0;">返回主页</el-button>
+        </div>
         <div class="datepicker-wrap">
             <div class="block">
                 <el-date-picker v-model="pickedDate" type="date" placeholder="请选择日期" />
@@ -52,7 +55,7 @@ function showImageDetails(image) {
 
 const router = useRouter();
 const backToMain = () => {
-  router.push("/");
+    router.push("/");
 };
 
 
@@ -113,8 +116,9 @@ watch(pickedDate, async (newDate) => {
 }
 
 .back-to-main-btn {
-  margin: 20px;
-  align-self: flex-start; /* 对齐到容器的左侧 */
+    margin: 5px;
+    align-self: flex-end;
+    /* 对齐到容器的左侧 */
 }
 
 .result-wrap {

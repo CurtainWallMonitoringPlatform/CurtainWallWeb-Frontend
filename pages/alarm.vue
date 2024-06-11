@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const backToMain = () => {
-  router.push("/");
+    router.push("/");
 };
 
 //所有记录数
@@ -105,6 +105,10 @@ const handleSelectPage = () => {
 </script>
 
 <template>
+    <div style="position: fixed; right: 10px; top: 15px; z-index: 1000;">
+        <el-button type="primary" class="back-to-main-btn" @click="backToMain"
+            style="position: absolute; right: 0; top: 0;">返回主页</el-button>
+    </div>
     <UDashboardPage>
         <UDashboardPanel grow>
             <UDashboardNavbar title="报警记录" :badge="total">
@@ -118,7 +122,6 @@ const handleSelectPage = () => {
                     <DateRangePicker @selectRange="handleSelectRange"></DateRangePicker>
                     <!-- 报警等级选择 -->
                     <AlarmLevelSelectMenu @selectLevel="handleSelectLevel"></AlarmLevelSelectMenu>
-                    <el-button type="primary" class="back-to-main-btn" @click="backToMain">返回主页</el-button>
                 </template>
             </UDashboardToolbar>
 

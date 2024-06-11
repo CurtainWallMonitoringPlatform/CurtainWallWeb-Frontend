@@ -1,7 +1,10 @@
 <!-- 图像分割页面 -->
 <template>
   <div class="main-page">
-    <el-button type="primary" class="back-to-main-btn" @click="backToMain">返回主页</el-button>
+    <div style="position: fixed; right: 10px; top: 10px; z-index: 1000;">
+        <el-button type="primary" class="back-to-main-btn" @click="backToMain"
+            style="position: absolute; right: 0; top: 0;">返回主页</el-button>
+    </div>
     <div class="container">
       <ImgUploader
         ref="ImgUploadRef"
@@ -211,8 +214,8 @@ const handleSwitchChange = (newValue) => {
 }
 
 .back-to-main-btn {
-  margin: 20px;
-  align-self: flex-start; /* 对齐到容器的左侧 */
+  margin: 5px;
+  align-self: flex-end; /* 对齐到容器的左侧 */
 }
 
 .upload-container {
