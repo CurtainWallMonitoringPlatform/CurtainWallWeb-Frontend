@@ -79,7 +79,7 @@ const modules = reactive([
     title: "玻璃平整度检测",
     description: "给定一张建筑玻璃图片，检测其平整度",
     // to: "https://github.com/vueuse/vueuse",
-    target_address: "http://localhost:8080",
+    target_address: "http://111.231.168.12:3000",
     permissionKey: "access_system_g",
     icon: "i-simple-icons-edgeimpulse",
   },
