@@ -95,7 +95,7 @@
             <el-button @click="register">注册</el-button>
           </el-form-item>
 
-          <el-form-item style="position: absolute; top: 85%">
+          <el-form-item style="position: absolute; top: 90%">
             <p
               @click="toggleForm"
               style="color: rgb(193, 193, 193); cursor: pointer"
@@ -197,8 +197,8 @@ const sendVerificationCode = async () => {
       startCountdown();
     }
   } catch (error) {
-    console.error(error);
-    ElMessage.error(error.message || "验证码发送错误");
+    console.error('Error response:', error.response);
+    ElMessage.error(error.response._data.message);
   }
 };
 
@@ -232,11 +232,18 @@ const register = async () => {
       },
     });
     if (response) {
+      // console.log(response.code);
+      if(response.code !== 200) {
+        ElMessage.error(response.message);
+        return;
+      }
       toggleForm;
+      showLoginForm = !showLoginForm;
+      ElMessage.success("注册成功");
     }
   } catch (error) {
-    console.error(error);
-    ElMessage.error(error.message || "注册错误");
+    // console.error(error.message);
+    // ElMessage.error(response.message || "注册错误");
   }
 
   // 实现注册逻辑
