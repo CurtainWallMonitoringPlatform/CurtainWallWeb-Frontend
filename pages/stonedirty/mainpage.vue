@@ -4,7 +4,9 @@
       <el-button type="primary" @click="backToMain">返回主页</el-button>
     </div>
     <div class="upload-container">
-      <el-upload class="upload-demo" drag action="http://111.231.168.12:8090/upload" multiple
+      <!-- <el-upload class="upload-demo" drag action="http://111.231.168.12:8090/upload" multiple
+        @success="handleUploadSuccess"> -->
+      <el-upload class="upload-demo" drag action="/stonedirty/upload" multiple
         @success="handleUploadSuccess">
         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
         <div class="el-upload__text">拖动文件至区域内或<em>点击上传</em></div>
@@ -158,7 +160,8 @@ const progressPercentage = ref(0); //进度条响应变量
 
 const fetchData = async () => {
   try {
-    const response = await axios.get("http://111.231.168.12:8090/tabledata");
+    // const response = await axios.get("http://111.231.168.12:8090/tabledata");
+    const response = await axios.get("/stonedirty/tabledata");
     // console.log(response.data);
     tableData.value = response.data;
     showTable.value = true; // 显示表格

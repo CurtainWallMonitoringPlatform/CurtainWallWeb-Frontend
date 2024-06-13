@@ -42,7 +42,8 @@ const parentBorder = ref(true);
 const tableData = ref([]);
 
 onMounted(() => {
-    axios.get('http://111.231.168.12:8090/historydata')
+    // axios.get('http://111.231.168.12:8090/historydata')
+    axios.get('/stonedirty/historydata')
         .then(response => {
             tableData.value = response.data;
         })

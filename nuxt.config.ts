@@ -17,6 +17,11 @@ export default defineNuxtConfig({
         target: 'http://111.231.168.12:8000/account',
          changeOrigin: true,
       },
+      '/stonedirty': {
+        target: 'http://111.231.168.12:8090',
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/stonedirty/, ''),
+      },
     },
   },
 })
