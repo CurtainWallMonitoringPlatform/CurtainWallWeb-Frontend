@@ -1,7 +1,11 @@
 <template>
   <div class="main-container">
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 5px; margin-right: 5px">
+      <el-button type="primary" @click="backToMain">返回主页</el-button>
+    </div>
     <div class="upload-container">
-      <el-upload class="upload-demo" drag action="http://111.231.168.12:8090/upload" multiple @success="handleUploadSuccess">
+      <el-upload class="upload-demo" drag action="http://111.231.168.12:8090/upload" multiple
+        @success="handleUploadSuccess">
         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
         <div class="el-upload__text">拖动文件至区域内或<em>点击上传</em></div>
         <template #tip>
@@ -60,7 +64,7 @@
 .main-container {
   display: flex;
   flex-direction: column;
-  width:100%;
+  width: 100%;
   margin: 10px;
 }
 
@@ -135,6 +139,12 @@ import { ref } from "vue";
 import { UploadFilled } from "@element-plus/icons-vue";
 import { Upload } from "@element-plus/icons-vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const backToMain = () => {
+    router.push("/");
+};
 
 const tableData = ref([]);
 const showTable = ref(false); // 控制是否显示表格的标志

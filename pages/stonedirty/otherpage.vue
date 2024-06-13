@@ -1,5 +1,8 @@
 <template>
     <div class="main-container">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 5px; margin-right: 5px">
+            <el-button type="primary" @click="backToMain">返回主页</el-button>
+        </div>
         <div class="demo-image">
             <el-table :data="tableData" :border="parentBorder" style="width: 100%">
                 <el-table-column type="expand">
@@ -28,6 +31,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const backToMain = () => {
+    router.push("/");
+};
 
 const parentBorder = ref(true);
 const tableData = ref([]);
@@ -62,10 +71,10 @@ onMounted(() => {
 
 <style scoped>
 .main-container {
-  display: flex;
-  flex-direction: column;
-  width:100%;
-  margin: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 10px;
 }
 
 .demo-image {
