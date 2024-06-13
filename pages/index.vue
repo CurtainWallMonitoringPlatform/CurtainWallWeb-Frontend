@@ -47,7 +47,7 @@ const modules = reactive([
   {
     title: "石材裂缝检测",
     description: "用于识别建筑石材幕墙表面裂缝",
-    // to: "https://github.com/nuxt-modules/tailwindcss",
+    target_address: "http://1.92.72.113:8080",
     permissionKey: "access_system_c",
     icon: "i-simple-icons-affinitypublisher",
   },
@@ -87,7 +87,7 @@ const modules = reactive([
 
 const checkPermissionAndRedirect = (module) => {
   if (userAuth.value.is_superuser || userAuth.value[module.permissionKey]) {
-    if (module.title === "3D建筑模型" || module.title === "玻璃平整度检测") {
+    if (module.title === "3D建筑模型" || module.title === "玻璃平整度检测" || module.title === "石材裂缝检测") {
       window.location.href = module.target_address; // 使用window.location.href进行跳转
     } else {
       router.push({ path: module.target_address }); // 使用router.push进行跳转
@@ -103,13 +103,8 @@ const checkPermissionAndRedirect = (module) => {
     <UDashboardPanel grow>
       <UDashboardNavbar title="首页"> </UDashboardNavbar>
       <UPageGrid class="custom-margin">
-        <UPageCard
-          v-for="(module, index) in modules"
-          :key="index"
-          v-bind="module"
-          @click="checkPermissionAndRedirect(module)"
-          class="hover-effect"
-        >
+        <UPageCard v-for="(module, index) in modules" :key="index" v-bind="module"
+          @click="checkPermissionAndRedirect(module)" class="hover-effect">
           <template #description>
             <span class="line-clamp-2">{{ module.description }}</span>
           </template>
@@ -123,6 +118,7 @@ const checkPermissionAndRedirect = (module) => {
 .custom-margin {
   margin: 20px;
 }
+
 .hover-effect:hover {
   background-color: #f0f0f0;
   cursor: pointer;
@@ -131,6 +127,7 @@ const checkPermissionAndRedirect = (module) => {
 
 .back-to-main-btn {
   margin: 5px;
-  align-self: flex-end; /* 对齐到容器的左侧 */
+  align-self: flex-end;
+  /* 对齐到容器的左侧 */
 }
 </style>

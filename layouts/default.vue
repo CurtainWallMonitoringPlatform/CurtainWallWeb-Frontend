@@ -105,6 +105,13 @@ const links = reactive([
 
   },
   {
+    id: "stoneCrack",
+    label: "石材裂缝检测",
+    icon: "i-simple-icons-affinitypublisher",
+    to: "http://1.92.72.113:8080",
+    defaultOpen: false,
+  },
+  {
     id: "wind",
     label: "风振数据检测",
     icon: "i-simple-icons-tailwindcss",
@@ -374,7 +381,7 @@ const backToMain = () => {
       <UDashboardNavbar class="!border-transparent" :ui="{ left: 'flex-1' }">
         <template #left>
           <WebInfo />
-          
+
         </template>
       </UDashboardNavbar>
 
