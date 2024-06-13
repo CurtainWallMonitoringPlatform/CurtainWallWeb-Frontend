@@ -47,11 +47,15 @@
               <el-image style="width: 100%; height: 100%" :src="scope.row.pre_photo" fit="cover"></el-image>
             </template>
           </el-table-column>
-          <el-table-column label="幕墙块识别图">
-            <template #default="scope">
-              <el-image style="width: 100%; height: 100%" :src="scope.row.result_photo" fit="cover"></el-image>
-            </template>
-          </el-table-column>
+           <el-table-column label="幕墙块识别图">
+                      <template #default="scope">
+                          <el-image style="width: 100%; height: 100%" :src="scope.row.result_photo" :fit="cover">
+                              <template #error>
+                                  <div class="image-slot">该幕墙块无污渍</div>
+                                </template>
+                            </el-image>
+                        </template>
+                    </el-table-column>
           <el-table-column prop="area" label="污渍总面积" />
         </el-table>
       </div>
@@ -143,7 +147,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const backToMain = () => {
-    router.push("/");
+  router.push("/");
 };
 
 const tableData = ref([]);
