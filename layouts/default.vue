@@ -83,6 +83,28 @@ const links = reactive([
     click: goto3DModel,
   },
   {
+    id: "stoneDirty",
+    label: "石材污渍检测",
+    // to: "/userManage",
+    icon: "i-heroicons-fire",
+    tooltip: {
+      text: "石材污渍检测",
+    },
+    defaultOpen: false,
+    children: [
+      {
+        label: "上传图片",
+        to: "/stonedirty/mainpage",
+        exact: true,
+      },
+      {
+        label: "历史图片",
+        to: "/stonedirty/otherpage",
+      },
+    ],
+
+  },
+  {
     id: "wind",
     label: "风振数据检测",
     icon: "i-simple-icons-tailwindcss",
@@ -261,6 +283,9 @@ const getUserAuth = async () => {
     }
     if (!userAuth.value.access_system_a) {
       removeLinkById("3DBuildingModel");
+    }
+    if (!userAuth.value.access_system_b) {
+      removeLinkById("stoneDirty");
     }
     if (!userAuth.value.access_system_d) {
       removeLinkById("explosion");

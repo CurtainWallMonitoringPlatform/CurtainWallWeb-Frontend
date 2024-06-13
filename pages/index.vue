@@ -40,14 +40,14 @@ const modules = reactive([
   {
     title: "石材污渍检测",
     description: "用于识别建筑石材幕墙表面污渍",
-    to: "https://github.com/nuxt-modules/tailwindcss",
+    target_address: "/stonedirty/mainpage",
     icon: "i-heroicons-fire",
     permissionKey: "access_system_b",
   },
   {
     title: "石材裂缝检测",
     description: "用于识别建筑石材幕墙表面裂缝",
-    to: "https://github.com/nuxt-modules/tailwindcss",
+    // to: "https://github.com/nuxt-modules/tailwindcss",
     permissionKey: "access_system_c",
     icon: "i-simple-icons-affinitypublisher",
   },
