@@ -46,10 +46,10 @@
 
     const devices = ref();
     const selectedDevice = ref({
-        deviceId: 'A77C5238',
-        deviceName: 'A楼01',
-        disabled: true,
-        online: false,
+        deviceId: '9A0D1958',
+        deviceName: 'A楼03',
+        disabled: false,
+        online: true,
     });
 
     //获取设备信息
@@ -75,8 +75,11 @@
     };
 
     onMounted(() =>{
+        first_flag = true;
         fetchDeviceList();
         console.log(deviceList.value);
+        timeChart = echarts.init(document.getElementById('main'));
+        amplitudeChart = echarts.init(document.getElementById('main2'));
     })
 
     let timeChart: any;
@@ -89,10 +92,10 @@
 
 
     //初始化echarts
-    onMounted(() => {
-        timeChart = echarts.init(document.getElementById('main'));
-        amplitudeChart = echarts.init(document.getElementById('main2'));
-    });
+    // onMounted(() => {
+    //     timeChart = echarts.init(document.getElementById('main'));
+    //     amplitudeChart = echarts.init(document.getElementById('main2'));
+    // });
 
     //随窗口响应式变化
     window.addEventListener('resize', function() {
@@ -333,15 +336,14 @@
                         device.deviceName = deviceInfo.deviceName;
                     }
                 });
-                const onlineDevice = devices.value.find((device: { online: boolean; }) => device.online === true);
-                if(first_flag) {
-                    selectedDevice.value.deviceId = onlineDevice.deviceId;
-                    selectedDevice.value.deviceName = onlineDevice.deviceName;
-                    selectedDevice.value.disabled = false;
-                    selectedDevice.value.online = true;
-                }
-                first_flag = false;
-
+                // const onlineDevice = devices.value.find((device: { online: boolean; }) => device.online === true);
+                // if(first_flag) {
+                //     selectedDevice.value.deviceId = onlineDevice.deviceId;
+                //     selectedDevice.value.deviceName = onlineDevice.deviceName;
+                //     selectedDevice.value.disabled = false;
+                //     selectedDevice.value.online = true;
+                // }
+                // first_flag = false;
             }
 
         }
@@ -394,11 +396,14 @@
                             device.deviceName = deviceInfo.deviceName;
                         }
                     });
-                    const onlineDevice = devices.value.find((device: { online: boolean; }) => device.online === true);
-                    if(selectedDevice.value.disabled){
-                        selectedDevice.value.deviceId = onlineDevice.deviceId;
-                        selectedDevice.value.deviceName = onlineDevice.deviceName;
-                    }
+                    // const onlineDevice = devices.value.find((device: { online: boolean; }) => device.online === true);
+                    // if(selectedDevice.value.disabled){
+                    //     selectedDevice.value.deviceId = onlineDevice.deviceId;
+                    //     selectedDevice.value.deviceName = onlineDevice.deviceName;
+                    //     selectedDevice.value.disabled = false;
+                    //     selectedDevice.value.online = true;
+                    // }
+                    // first_flag = false;
                 }
 
             }
