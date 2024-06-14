@@ -65,7 +65,7 @@ let deviceList = ref<Device[]>([]);
 const fetchDeviceList = async () => {
     try {
         const response = await useFetch('/api/device/all');
-        deviceList.value = response.data.value as unknown as Device[];
+        deviceList.value = response.data.value.data.devices as unknown as Device[];
         console.log(deviceList.value);
     } catch (error) {
         console.error('Error getting device list:', error);
