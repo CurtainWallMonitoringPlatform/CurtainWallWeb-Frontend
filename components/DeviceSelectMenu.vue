@@ -58,7 +58,7 @@
         key: 'device-list', // 用于缓存和重新获取数据的键
         immediate: true, // 立即执行数据获取
     }).then((response) => {
-        deviceList.value = response.data.value as Device[]
+        deviceList.value = response.data.value.data.devices as Device[]
     })
 
     watch(selectedDevice, (newValue) => {
