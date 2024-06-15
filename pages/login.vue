@@ -5,7 +5,7 @@
     <div v-if="showLoginForm">
       <form @submit.prevent="login">
         <el-form class="form1">
-          <h2>欢迎！请登录您的账户</h2>
+          <span style="margin-bottom: 20px; font-size: 20px;">欢迎！请登录您的账户</span>
           <el-form-item>
             <el-input
               v-model="loginForm.email"
@@ -32,10 +32,7 @@
           </el-form-item>
 
           <el-form-item style="position: absolute; top: 80%">
-            <p
-              @click="toggleForm"
-              style="color: rgb(193, 193, 193); cursor: pointer"
-            >
+            <p @click="toggleForm" style="color: rgb(193, 193, 193); cursor: pointer; margin-top:20px; font-size:15px">
               没有账户？点击注册
             </p>
           </el-form-item>
@@ -47,7 +44,7 @@
     <div v-else>
       <form @submit.prevent="register">
         <el-form class="form2">
-          <h2>欢迎！请输入注册信息</h2>
+          <span style="margin-bottom: 20px; font-size: 20px;">欢迎！请输入注册信息</span>
           <el-form-item>
             <el-input
               v-model="registerForm.email"
@@ -63,7 +60,7 @@
                 <button
                   @click.prevent="sendVerificationCode"
                   :disabled="disableButton"
-                  style="color: white; background-color: lightgrey"
+                  style="color: white; background-color: RGB(0,102,204); padding: 0 10px; border-radius: 5px; cursor: pointer;"
                 >
                   {{ buttonText }}
                 </button>
@@ -98,7 +95,7 @@
           <el-form-item style="position: absolute; top: 90%">
             <p
               @click="toggleForm"
-              style="color: rgb(193, 193, 193); cursor: pointer"
+              style="color: rgb(193, 193, 193); cursor: pointer;margin-top:20px; font-size:15px"
             >
               已有账户？点此登录
             </p>
@@ -280,7 +277,7 @@ definePageMeta({
 .page {
   background-image: url("/assets/images/background.png");
   background-size: cover;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   height: 100vh;
