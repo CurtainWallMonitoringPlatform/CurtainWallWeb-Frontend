@@ -75,7 +75,7 @@
     };
 
     onMounted(() =>{
-        first_flag = true;
+        // first_flag = true;
         fetchDeviceList();
         console.log(deviceList.value);
         timeChart = echarts.init(document.getElementById('main'));
@@ -283,7 +283,7 @@
     //WebSocket
     const websocketUrl = 'wss://digetech.cn:8771/websocket/user_58';
     let socket1 = new WebSocket(websocketUrl);
-    let first_flag = true;
+    // let first_flag = true;
 
     //socket请求参数1：获取设备实时状态
     const request1 = {

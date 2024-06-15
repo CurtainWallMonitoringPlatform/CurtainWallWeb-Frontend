@@ -18,13 +18,13 @@ const links = [{
   icon: 'i-heroicons-chart-bar-square',
   to: '/monitor',
   children: [{
+    label: '历史趋势',
+    to: '/monitor/historical'
+  },{
     label: '实时监测',
     to: '/monitor',
     exact: true
   }, {
-    label: '历史趋势',
-    to: '/monitor/historical'
-  },{
     label: '异常数据',
     to: '/monitor/abnormal'
   }],
