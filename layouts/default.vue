@@ -57,7 +57,7 @@ const goto3DModel = () => {
 const gotoGlassFlatness = () => {
   // router.push("http://localhost:5173")
   // window.open("http://localhost:5173", "_blank");
-  window.location.href = "http://111.231.168.12:3000";
+  window.location.href = "http://111.231.168.12:6000";
 };
 
 
@@ -228,6 +228,16 @@ const links = reactive([
     },
   },
   {
+    id: "glassToughnessJudge",
+    label: "幕墙韧性评估",
+    // to: "/explosion",
+    icon: "i-simple-icons-testcafe",
+    click: glassToughness,
+    tooltip: {
+      text: "幕墙韧性评估",
+    },
+  },
+  {
     id: "userInfo",
     label: "个人信息",
     to: "/userInfo",
@@ -266,6 +276,7 @@ const userAuth = ref({
   access_system_e: false,
   access_system_f: false,
   access_system_g: false,
+  access_system_h: false,
 });
 
 function removeLinkById(linkId: any) {
@@ -305,6 +316,9 @@ const getUserAuth = async () => {
     }
     if (!userAuth.value.access_system_g) {
       removeLinkById("glassFlatness");
+    }
+    if (!userAuth.value.access_system_h) {
+      removeLinkById("glassToughnessJudge");
     }
     if (!userAuth.value.is_superuser) {
       removeLinkById("userManage");
