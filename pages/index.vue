@@ -98,7 +98,7 @@ const modulesLine4 = reactive([
     // to: "",
     target_address: "/segment",
     permissionKey: "access_system_h",
-    target_address: "http://111.231.168.12:6000",
+    target_address: "http://111.231.168.12:8999",
     icon: "i-simple-icons-testcafe",
   },
 ]);

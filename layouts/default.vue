@@ -57,7 +57,7 @@ const goto3DModel = () => {
 const gotoGlassFlatness = () => {
   // router.push("http://localhost:5173")
   // window.open("http://localhost:5173", "_blank");
-  window.location.href = "http://111.231.168.12:6000";
+  window.location.href = "http://111.231.168.12:8999";
 };
 
 
