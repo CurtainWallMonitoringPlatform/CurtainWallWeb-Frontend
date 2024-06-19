@@ -44,10 +44,10 @@ const backToMain = () => {
 
 const devices = ref();
 const selectedDevice = ref({
-    deviceId: 'A77C5238',
-    deviceName: 'A楼01',
-    disabled: true,
-    online: false,
+    deviceId: '9A0D1958',
+    deviceName: 'A楼03',
+    disabled: false,
+    online: true,
 });
 
 //获取设备信息
@@ -74,7 +74,8 @@ const fetchDeviceList = async () => {
 
 onMounted(() => {
     fetchDeviceList();
-    console.log(deviceList.value);
+    timeChart = echarts.init(document.getElementById('main'));
+    amplitudeChart = echarts.init(document.getElementById('main2'));
 })
 
 let timeChart: any;
@@ -85,12 +86,6 @@ let AmplitudeCurveData: any;
 
 type EChartsOption = echarts.EChartsOption;
 
-
-//初始化echarts
-onMounted(() => {
-    timeChart = echarts.init(document.getElementById('main'));
-    amplitudeChart = echarts.init(document.getElementById('main2'));
-});
 
 //随窗口响应式变化
 window.addEventListener('resize', function () {
@@ -278,7 +273,6 @@ const drawAmplitudeChart = (data: any) => {
 //WebSocket
 const websocketUrl = 'wss://digetech.cn:8771/websocket/user_58';
 let socket1 = new WebSocket(websocketUrl);
-let first_flag = true;
 
 //socket请求参数1：获取设备实时状态
 const request1 = {
@@ -331,14 +325,6 @@ socket1.onmessage = (event) => {
                     device.deviceName = deviceInfo.deviceName;
                 }
             });
-            const onlineDevice = devices.value.find((device: { online: boolean; }) => device.online === true);
-            if (first_flag) {
-                selectedDevice.value.deviceId = onlineDevice.deviceId;
-                selectedDevice.value.deviceName = onlineDevice.deviceName;
-                selectedDevice.value.disabled = false;
-                selectedDevice.value.online = true;
-            }
-            first_flag = false;
 
         }
 
@@ -392,11 +378,6 @@ watch(selectedDevice, (newValue) => {
                         device.deviceName = deviceInfo.deviceName;
                     }
                 });
-                const onlineDevice = devices.value.find((device: { online: boolean; }) => device.online === true);
-                if (selectedDevice.value.disabled) {
-                    selectedDevice.value.deviceId = onlineDevice.deviceId;
-                    selectedDevice.value.deviceName = onlineDevice.deviceName;
-                }
             }
 
         }
