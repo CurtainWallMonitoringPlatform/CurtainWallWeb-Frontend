@@ -57,6 +57,12 @@ const goto3DModel = () => {
 const gotoGlassFlatness = () => {
   // router.push("http://localhost:5173")
   // window.open("http://localhost:5173", "_blank");
+  window.location.href = "http://111.231.168.12:3000";
+};
+
+const gotoGlassToughness = () => {
+  // router.push("http://localhost:5173")
+  // window.open("http://localhost:5173", "_blank");
   window.location.href = "http://111.231.168.12:8999";
 };
 
@@ -232,7 +238,7 @@ const links = reactive([
     label: "幕墙韧性评估",
     // to: "/explosion",
     icon: "i-simple-icons-testcafe",
-    click: glassToughness,
+    click: gotoGlassToughness,
     tooltip: {
       text: "幕墙韧性评估",
     },
