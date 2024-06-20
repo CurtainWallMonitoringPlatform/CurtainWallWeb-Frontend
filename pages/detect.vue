@@ -180,41 +180,4 @@ const objectSpanMethod = ({ rowIndex, columnIndex }: SpanMethodProps) => {
   }
 };
 
-// const tableData: Photo[] = [
-//   {
-//     id: "12987122",
-//     name: "Tom",
-//     mark_photo: "234",
-//     num_photo: "3.2",
-//     pre_photo: 10
-//   },
-//   {
-//     id: "12987123",
-//     name: "Tom",
-//     mark_photo: "165",
-//     num_photo: "4.43",
-//     pre_photo: 12
-//   },
-//   {
-//     id: "12987124",
-//     name: "Tom",
-//     mark_photo: "324",
-//     num_photo: "1.9",
-//     pre_photo: 9
-//   },
-//   {
-//     id: "12987125",
-//     name: "Tom",
-//     mark_photo: "621",
-//     num_photo: "2.2",
-//     pre_photo: 17
-//   },
-//   {
-//     id: "12987126",
-//     name: "Tom",
-//     mark_photo: "539",
-//     num_photo: "4.1",
-//     pre_photo: 15
-//   },
-// ];
 </script>
