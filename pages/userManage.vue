@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <!-- 搜索栏 -->
-    <div class="search-container">
+    <!-- <div class="search-container">
       <el-input
         v-model="filterKeyword"
         placeholder="请输入关键字搜索"
@@ -11,7 +11,7 @@
           <el-button @click="searchAction"> 搜索 </el-button>
         </template>
       </el-input>
-    </div>
+    </div> -->
 
     <div class="table_container">
       <el-table
@@ -55,7 +55,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="玻璃自爆权限" prop="access_system_d">
+        <el-table-column label="玻璃自爆检测权限" prop="access_system_d">
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_d"
@@ -107,6 +107,13 @@ const handleSelect = (key, keyPath) => {
 const itemList = ref([]);
 
 const handleSwitchChange = async (item, key) => {
+  // 判断是否为管理员并且管理员权限不可更改，仅可更改管理员权限
+  if (item.is_superuser && key !== 'is_superuser') {
+    ElMessage.warning("管理员固定获得全部权限，不可修改");
+    await nextTick(); 
+    item[key] = !item[key];
+    return; // 提前返回，不执行更多操作
+  }
   const dataToSend = {
     [item.email]: {
       // 使用动态键名设置邮箱地址
@@ -198,6 +205,9 @@ getAllPermission();
   display: flex;
   justify-content: center;
   margin: 2em;
+  overflow: auto;
+  height: 85vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .search-container {

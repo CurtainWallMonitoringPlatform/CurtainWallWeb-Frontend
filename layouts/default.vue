@@ -48,6 +48,25 @@ const checkPressmission = async () => {
   }
 };
 
+const goto3DModel = () => {
+  // router.push("http://localhost:5173")
+  // window.open("http://localhost:5173", "_blank");
+  window.location.href = "http://120.46.136.85:5173";
+};
+
+const gotoGlassFlatness = () => {
+  // router.push("http://localhost:5173")
+  // window.open("http://localhost:5173", "_blank");
+  window.location.href = "http://111.231.168.12:3000";
+};
+
+const gotoGlassToughness = () => {
+  // router.push("http://localhost:5173")
+  // window.open("http://localhost:5173", "_blank");
+  window.location.href = "http://111.231.168.12:8999";
+};
+
+
 const links = reactive([
   {
     id: "home",
@@ -58,6 +77,45 @@ const links = reactive([
       text: "首页",
       shortcuts: ["G", "H"],
     },
+  },
+  {
+    id: "3DBuildingModel",
+    label: "3D建筑模型",
+    // to: "/userManage",
+    icon: "i-simple-icons-googlehome",
+    tooltip: {
+      text: "3D建筑模型",
+    },
+    click: goto3DModel,
+  },
+  {
+    id: "stoneDirty",
+    label: "石材污渍检测",
+    // to: "/userManage",
+    icon: "i-heroicons-fire",
+    tooltip: {
+      text: "石材污渍检测",
+    },
+    defaultOpen: false,
+    children: [
+      {
+        label: "上传图片",
+        to: "/stonedirty/mainpage",
+        exact: true,
+      },
+      {
+        label: "历史图片",
+        to: "/stonedirty/otherpage",
+      },
+    ],
+
+  },
+  {
+    id: "stoneCrack",
+    label: "石材裂缝检测",
+    icon: "i-simple-icons-affinitypublisher",
+    to: "http://1.92.72.113:8080",
+    defaultOpen: false,
   },
   {
     id: "wind",
@@ -102,6 +160,16 @@ const links = reactive([
         },
       },
       {
+        id: "alarm",
+        label: "报警中心",
+        icon: "i-heroicons-exclamation-triangle",
+        to: "/alarm",
+        tooltip: {
+          text: "报警中心",
+          shortcuts: ["G", "W"],
+        },
+      },
+      {
         id: "settings",
         label: "设置",
         to: "/settings",
@@ -131,9 +199,9 @@ const links = reactive([
   {
     id: "segment",
     label: "幕墙材质分割",
-    icon: "i-heroicons-building-office",
+    icon: "i-simple-icons-homeassistantcommunitystore",
     to: "/segment",
-    defaultOpen: false,
+    defaultOpen: true,
     children: [
       {
         label: "幕墙分割识别",
@@ -143,16 +211,36 @@ const links = reactive([
       {
         label: "查看历史记录",
         to: "/segment/history",
-      }
-    ]
+      },
+    ],
   },
   {
     id: "explosion",
-    label: "玻璃内爆检测",
+    label: "玻璃自爆检测",
     to: "/explosion",
-    icon: "i-heroicons-fire",
+    icon: "i-material-symbols-sound-detection-glass-break-sharp",
+    tooltip: {
+      text: "玻璃自爆检测",
+    },
+  },
+  {
+    id: "glassFlatness",
+    label: "玻璃平整度检测",
+    // to: "/explosion",
+    icon: "i-simple-icons-edgeimpulse",
+    click: gotoGlassFlatness,
     tooltip: {
       text: "玻璃内爆检测",
+    },
+  },
+  {
+    id: "glassToughnessJudge",
+    label: "幕墙韧性评估",
+    // to: "/explosion",
+    icon: "i-simple-icons-testcafe",
+    click: gotoGlassToughness,
+    tooltip: {
+      text: "幕墙韧性评估",
     },
   },
   {
@@ -194,6 +282,7 @@ const userAuth = ref({
   access_system_e: false,
   access_system_f: false,
   access_system_g: false,
+  access_system_h: false,
 });
 
 function removeLinkById(linkId: any) {
@@ -216,11 +305,26 @@ const getUserAuth = async () => {
     if (userAuth.value.is_superuser) {
       return;
     }
+    if (!userAuth.value.access_system_a) {
+      removeLinkById("3DBuildingModel");
+    }
+    if (!userAuth.value.access_system_b) {
+      removeLinkById("stoneDirty");
+    }
+    if (!userAuth.value.access_system_d) {
+      removeLinkById("explosion");
+    }
     if (!userAuth.value.access_system_e) {
       removeLinkById("wind");
     }
     if (!userAuth.value.access_system_f) {
       removeLinkById("segment");
+    }
+    if (!userAuth.value.access_system_g) {
+      removeLinkById("glassFlatness");
+    }
+    if (!userAuth.value.access_system_h) {
+      removeLinkById("glassToughnessJudge");
     }
     if (!userAuth.value.is_superuser) {
       removeLinkById("userManage");
@@ -234,7 +338,7 @@ getUserAuth();
 
 onMounted(() => {
   getUserAuth();
-})
+});
 
 const footerLinks = [
   {
@@ -285,6 +389,10 @@ const colors = computed(() =>
     active: appConfig.ui.primary === color.label,
   }))
 );
+
+const backToMain = () => {
+  router.push("/");
+};
 </script>
 
 <template>
@@ -293,6 +401,7 @@ const colors = computed(() =>
       <UDashboardNavbar class="!border-transparent" :ui="{ left: 'flex-1' }">
         <template #left>
           <WebInfo />
+
         </template>
       </UDashboardNavbar>
 
@@ -334,4 +443,10 @@ const colors = computed(() =>
   </UDashboardLayout>
 </template>
 
-<style></style>
+<style>
+.back-to-main-btn {
+  margin: 5px;
+  align-self: flex-end;
+  /* 对齐到容器的左侧 */
+}
+</style>

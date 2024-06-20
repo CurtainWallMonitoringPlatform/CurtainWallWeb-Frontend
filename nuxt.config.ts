@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   //   '~/plugins/cleanup.js'
   // ],
   ui: {
-    icons: ['heroicons', 'simple-icons'],
+    icons: ['heroicons', 'simple-icons','material-symbols'],
     safelistColors: ['primary', 'red', 'orange', 'green']
   },
   devtools: { enabled: true },
@@ -16,6 +16,11 @@ export default defineNuxtConfig({
       '/api/account': {
         target: 'http://111.231.168.12:8000/account',
          changeOrigin: true,
+      },
+      '/stonedirty': {
+        target: 'http://111.231.168.12:8090',
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/stonedirty/, ''),
       },
     },
   },

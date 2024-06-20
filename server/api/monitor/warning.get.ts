@@ -9,15 +9,15 @@ export default defineEventHandler(async (event: any) => {
     const query = await getQuery(event)
     console.log('query: ', query)
 
-    // 进行数据验证 ...
-    // 可以添加一些验证逻辑，确保接收到的数据是有效的
 
     // 发起GET请求
-    const response = await axios.get(`${BASE_URL}/abnormal-data`, { params: query });
+    const response = await axios.get(`${BASE_URL}/warning`, { params: query });
+    console.log('server',response);
 
     // 检查响应状态码
     if (response.status === 200) {
       // 历史数据获取成功
+      console.log('api: response', response);
       return response.data;
     } else {
       // 获取历史数据失败
