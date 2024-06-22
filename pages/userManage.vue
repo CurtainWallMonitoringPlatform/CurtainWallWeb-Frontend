@@ -1,17 +1,25 @@
 <template>
   <div class="page">
     <!-- 搜索栏 -->
-    <!-- <div class="search-container">
+    <div class="search-container">
       <el-input
         v-model="filterKeyword"
-        placeholder="请输入关键字搜索"
+        placeholder="请输入邮箱"
         class="input-with-select"
       >
-        <template #append>
-          <el-button @click="searchAction"> 搜索 </el-button>
-        </template>
       </el-input>
-    </div> -->
+      <el-select v-model="selectedPermission" placeholder="请选择权限" class="input-with-option">
+        <el-option
+          v-for="item in permissions"
+          :key="item"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+      <el-button @click="handlePermissionChange(true)" class="input-with-button"> 开启权限 </el-button>
+      <el-button @click="handlePermissionChange(false)" class="input-with-button"> 关闭权限 </el-button>
+    </div>
 
     <div class="table_container">
       <el-table
@@ -27,7 +35,7 @@
           <template #default="{ row }">
             <el-switch
               v-model="row.is_superuser"
-              @change="() => handleSwitchChange(row, 'is_superuser')"
+              @change="() => handleSwitchChange(row, 'is_superuser','table')"
             ></el-switch>
           </template>
         </el-table-column>
@@ -35,7 +43,7 @@
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_a"
-              @change="() => handleSwitchChange(row, 'access_system_a')"
+              @change="() => handleSwitchChange(row, 'access_system_a','table')"
             ></el-switch>
           </template>
         </el-table-column>
@@ -43,7 +51,7 @@
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_b"
-              @change="() => handleSwitchChange(row, 'access_system_b')"
+              @change="() => handleSwitchChange(row, 'access_system_b','table')"
             ></el-switch>
           </template>
         </el-table-column>
@@ -51,7 +59,7 @@
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_c"
-              @change="() => handleSwitchChange(row, 'access_system_c')"
+              @change="() => handleSwitchChange(row, 'access_system_c','table')"
             ></el-switch>
           </template>
         </el-table-column>
@@ -59,7 +67,7 @@
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_d"
-              @change="() => handleSwitchChange(row, 'access_system_d')"
+              @change="() => handleSwitchChange(row, 'access_system_d','table')"
             ></el-switch>
           </template>
         </el-table-column>
@@ -67,7 +75,7 @@
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_e"
-              @change="() => handleSwitchChange(row, 'access_system_e')"
+              @change="() => handleSwitchChange(row, 'access_system_e','table')"
             ></el-switch>
           </template>
         </el-table-column>
@@ -75,7 +83,7 @@
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_f"
-              @change="() => handleSwitchChange(row, 'access_system_f')"
+              @change="() => handleSwitchChange(row, 'access_system_f','table')"
             ></el-switch>
           </template>
         </el-table-column>
@@ -83,7 +91,7 @@
           <template #default="{ row }">
             <el-switch
               v-model="row.access_system_g"
-              @change="() => handleSwitchChange(row, 'access_system_g')"
+              @change="() => handleSwitchChange(row, 'access_system_g','table')"
             ></el-switch>
           </template>
         </el-table-column>
@@ -100,13 +108,55 @@ const filterKeyword = ref("");
 
 const selected_item = ref("1");
 
+const selectedPermission = ref("");
+
+const permissions = [
+  {
+    value: 'is_superuser',
+    label: '是否为管理员',
+  },
+  {
+    value: 'access_system_a',
+    label: '3D模型权限',
+  },
+  {
+    value: 'access_system_b',
+    label: '石材污渍权限',
+  },
+  {
+    value: 'access_system_c',
+    label: '石材裂缝权限',
+  },
+  {
+    value: 'access_system_d',
+    label: '玻璃内爆检测权限',
+  },
+  {
+    value: 'access_system_e',
+    label: '风振数据权限',
+  },
+  {
+    value: 'access_system_f',
+    label: '幕墙材质分割权限',
+  },
+  {
+    value: 'access_system_g',
+    label: '玻璃平整度权限',
+  },
+]
+
+const handlePermissionChange = async (isEnabled) => {
+  const item = { email: filterKeyword.value, [selectedPermission.value]: isEnabled };
+  await handleSwitchChange(item, selectedPermission.value,"email");
+};
+
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath);
 };
 
 const itemList = ref([]);
 
-const handleSwitchChange = async (item, key) => {
+const handleSwitchChange = async (item, key, updatemethod) => {
   // 判断是否为管理员并且管理员权限不可更改，仅可更改管理员权限
   if (item.is_superuser && key !== 'is_superuser') {
     ElMessage.warning("管理员固定获得全部权限，不可修改");
@@ -118,6 +168,7 @@ const handleSwitchChange = async (item, key) => {
     [item.email]: {
       // 使用动态键名设置邮箱地址
       [key]: item[key], // 设置对应权限的新值
+      method: updatemethod,
     },
   };
   try {
@@ -129,9 +180,17 @@ const handleSwitchChange = async (item, key) => {
       body: dataToSend,
     });
     ElMessage.success("权限修改成功");
+    setTimeout(() => {
+        location.reload();
+      }, 1000);
   } catch (error) {
     console.error(error);
-    ElMessage.error(error.message || "权限修改错误");
+    if(updatemethod == "email"){
+      ElMessage.error("邮箱不存在，或权限已满足要求，无需修改");
+    }
+    else{
+      ElMessage.error("权限修改出错");
+    }
   }
 };
 
@@ -192,7 +251,15 @@ getAllPermission();
 
 <style scoped>
 .input-with-select {
-  width: 500px; /* 调整输入框宽度 */
+  width: 400px; /* 调整输入框宽度 */
+}
+.input-with-option {
+  width: 200px; /* 调整选择框宽度 */
+}
+.input-with-button {
+  background-color: RGB(64,158,255); /* 设置按钮背景色为蓝色 */
+  color: white; /* 设置按钮文字颜色为白色 */
+  margin-left: 10px; /* 设置按钮与左侧元素的距离为10px */
 }
 
 .page {
