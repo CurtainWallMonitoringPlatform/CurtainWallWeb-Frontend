@@ -138,6 +138,7 @@ const registerForm = ref({
   email: "",
   code: "",
   password: "",
+  confirmPassword:"",
 });
 
 const focusNextInput = () => {
@@ -219,6 +220,10 @@ const resetCountdown = () => {
 };
 
 const register = async () => {
+  if (registerForm.value.password != registerForm.value.confirmPassword){
+    ElMessage.error("两次密码输入不一致，请重新输入密码");
+    return
+  }
   try {
     const response = await $fetch("/api/account/validate", {
       method: "POST",
@@ -234,9 +239,8 @@ const register = async () => {
         ElMessage.error(response.message);
         return;
       }
-      toggleForm;
-      showLoginForm = !showLoginForm;
       ElMessage.success("注册成功");
+      showLoginForm.value = true;
     }
   } catch (error) {
     // console.error(error.message);
