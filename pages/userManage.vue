@@ -95,6 +95,14 @@
             ></el-switch>
           </template>
         </el-table-column>
+        <el-table-column label="幕墙韧性评估权限" prop="access_system_g">
+          <template #default="{ row }">
+            <el-switch
+              v-model="row.access_system_h"
+              @change="() => handleSwitchChange(row, 'access_system_h','table')"
+            ></el-switch>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -142,6 +150,10 @@ const permissions = [
   {
     value: 'access_system_g',
     label: '玻璃平整度权限',
+  },
+  {
+    value: 'access_system_h',
+    label: '幕墙韧性评估权限',
   },
 ]
 
