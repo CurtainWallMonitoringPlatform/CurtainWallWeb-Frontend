@@ -51,7 +51,7 @@ const modulesLine2 = reactive([
   {
     title: "石材裂缝检测",
     description: "用于识别建筑石材幕墙表面裂缝",
-    target_address: "http://1.92.72.113:8080",
+    target_address: "http://1.92.72.113:5050",
     permissionKey: "access_system_c",
     icon: "i-simple-icons-affinitypublisher",
   },
@@ -122,7 +122,7 @@ const modulesLine4 = reactive([
 //   {
 //     title: "石材裂缝检测",
 //     description: "用于识别建筑石材幕墙表面裂缝",
-//     target_address: "http://1.92.72.113:8080",
+//     target_address: "http://1.92.72.113:5050",
 //     permissionKey: "access_system_c",
 //     icon: "i-simple-icons-affinitypublisher",
 //   },

@@ -114,7 +114,7 @@ const links = reactive([
     id: "stoneCrack",
     label: "石材裂缝检测",
     icon: "i-simple-icons-affinitypublisher",
-    to: "http://1.92.72.113:8080",
+    to: "http://1.92.72.113:5050",
     defaultOpen: false,
   },
   {
@@ -310,6 +310,9 @@ const getUserAuth = async () => {
     }
     if (!userAuth.value.access_system_b) {
       removeLinkById("stoneDirty");
+    }
+    if (!userAuth.value.access_system_c) {
+      removeLinkById("stoneCrack");
     }
     if (!userAuth.value.access_system_d) {
       removeLinkById("explosion");
