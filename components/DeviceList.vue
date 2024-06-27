@@ -62,10 +62,14 @@ const deleteDevice = async (deviceId: string) => {
 
 const editDeviceInfo = async (deviceInfo: Device) => {
   try {
-    await useFetch(`/api/device/modify/${deviceInfo.deviceId}`, {
+    // 将 deviceInfo 对象转换为 URL 参数格式
+    const params = new URLSearchParams(deviceInfo).toString();
+
+    // 将参数添加到 URL 中
+    const response = await useFetch(`/api/device/modify/${deviceInfo.deviceId}?${params}`, {
       method: 'PUT',
-      body: deviceInfo,
     });
+
     // await UpdateDeviceInfo(deviceInfo);
     fetchDeviceList();
     isDeviceSlideoverOpen.value = false;
@@ -73,6 +77,7 @@ const editDeviceInfo = async (deviceInfo: Device) => {
     console.error('Error updating device info:', error);
   }
 };
+
 
 function validate(deviceInfo: any): FormError[] {
   const errors = []

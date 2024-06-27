@@ -37,7 +37,9 @@ function validate(deviceInfo: any): FormError[] {
 async function onSubmit(event: FormSubmitEvent<any>) {
   // Do something with data
   // addDeviceInfo(event.data)
-  $fetch('/api/device/addDevice', { method: 'post', body: deviceInfo })
+  // 将 deviceInfo 对象转换为 URL 参数格式
+  const params = new URLSearchParams(deviceInfo).toString();
+  $fetch(`/api/device/addDevice?${params}`, { method: 'post'})
   console.log(event.data)
   toast.add({ title: 'Device Added', icon: 'i-heroicons-check-circle' })
   // Clear form
