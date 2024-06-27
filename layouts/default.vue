@@ -230,7 +230,7 @@ const links = reactive([
     icon: "i-simple-icons-edgeimpulse",
     click: gotoGlassFlatness,
     tooltip: {
-      text: "玻璃内爆检测",
+      text: "玻璃自爆检测",
     },
   },
   {

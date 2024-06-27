@@ -1,4 +1,4 @@
-<!-- 玻璃内爆识别页面 -->
+<!-- 玻璃自爆识别页面 -->
 <template>
     <div style="position: fixed; right: 10px; top: 10px; z-index: 1000;">
         <el-button type="primary" class="back-to-main-btn" @click="backToMain"

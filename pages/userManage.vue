@@ -137,7 +137,7 @@ const permissions = [
   },
   {
     value: 'access_system_d',
-    label: '玻璃内爆检测权限',
+    label: '玻璃自爆检测权限',
   },
   {
     value: 'access_system_e',

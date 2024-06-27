@@ -26,7 +26,6 @@ const fetchDeviceList = async () => {
   try {
     const response = await useFetch('/api/device/all');
     deviceList.value = response.data.value.data.devices as unknown as Device[];
-    console.log(deviceList.value);
   } catch (error) {
     console.error('Error getting device list:', error);
   }
@@ -36,9 +35,7 @@ const fetchDeviceInfo = async (deviceId: string) => {
   try {
     const { data: deviceInfo } = await useFetch(`/api/device/get/${deviceId}`)
     // const deviceInfo = await GetDeviceInfo(deviceId);
-    selectedDevice = deviceInfo.value;
-
-    console.log(selectedDevice);
+    selectedDevice = deviceInfo.value.data.devices[0];
     isDeviceSlideoverOpen.value = true;
   } catch (error) {
     console.error('Error getting device info:', error);
